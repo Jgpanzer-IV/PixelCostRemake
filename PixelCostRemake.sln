@@ -5,6 +5,10 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelCost.Client.Web", "PixelCost.Client.Web\PixelCost.Client.Web.csproj", "{ED573CD1-FC3B-43D6-8F08-D6C91BA1B76A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{420542EA-9F86-436A-9610-9331498F2011}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "service", "service", "{308C72F0-B8FE-47E9-8CDB-8540F284DC26}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,6 +22,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ED573CD1-FC3B-43D6-8F08-D6C91BA1B76A} = {420542EA-9F86-436A-9610-9331498F2011}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7B7F188-43A3-4A8D-93E2-C5F558250141}
