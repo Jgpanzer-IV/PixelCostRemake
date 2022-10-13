@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using PixelCost.Web.Models.upload;
+using PixelCost.Client.Web.Models.upload;
 
 namespace PixelCost.Client.Web.Models.content
 {

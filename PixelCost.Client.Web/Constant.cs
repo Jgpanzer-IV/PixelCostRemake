@@ -1,4 +1,4 @@
-namespace PixelCost.Web
+namespace PixelCost.Client.Web
 {
     public static class Constant
     {
