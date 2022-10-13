@@ -1,0 +1,119 @@
+﻿@page
+@model CategoryManagerModel
+@{
+    FinancialStatus Cost = new("Cost","32,500",0);
+    FinancialStatus Balance = new("Balance","1,200",1);
+    FinancialStatus Expense = new("Expense","28,500",2);
+    FinancialStatus Average = new("AverageExpense","631",3);
+    
+    string selectController = (!string.IsNullOrEmpty(Model.SubDurationID))? "d-block":"d-none";
+}
+
+
+<h1 class="text-center my-5 display-4">Category Manager</h1>
+
+<form id="FormSelector" method="get">
+    <div class="row">
+        <div class="col-lg">
+                <select id="SelectorDuration" asp-for="DurationID" asp-items="Model.DurationList" class="StyleWhite"></select>
+            <div class="mt-2">
+                <partial name="asset/_FullProgressBar" model="Model.DurationProgress"></partial>
+            </div>
+                
+        </div>
+        <div class="col-lg mt-3 mt-lg-0">
+            <select id="SelectorSubDuration" asp-for="SubDurationID" asp-items="Model?.SubDurationList" class="StyleWhite"></select>
+            <div class="@selectController">
+                <div class="d-flex flex-column flex-lg-row justify-content-evenly mt-2">
+                    <div class="flex-grow-1">
+                        <div class="mt-3 me-lg-3">
+                            <partial name="asset/_ShortProgressBar" model="Model?.SubDurationProgress"></partial>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <div class="mt-2 ms-lg-3">
+                            <partial name="asset/_FinancialStatus" model="Model?.BalanceForCategory"></partial>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>    
+
+<div class="row mt-5">
+    <div class="col-lg">
+        <span class="SubTopic">Exists Category</span>
+        <partial name="template/_TPCategoryItem" model="Model?.CategoryItemList"></partial>
+    </div>
+    <div class="col-lg">
+        <span class="SubTopic">Category Financial Information</span>
+        <div class="row my-2">
+            <div class="col-md mx-md-2">
+                <partial name="asset/_FinancialStatus" model="Cost"></partial>
+            </div>
+            <div class="col-md mx-md-2">
+                <partial name="asset/_FinancialStatus" model="Balance"></partial>
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-md mx-md-2">
+                <partial name="asset/_FinancialStatus" model="Expense"></partial>
+            </div>
+            <div class="col-md mx-md-2">
+                <partial name="asset/_FinancialStatus" model="Average"></partial>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-lg-4 mt-3">
+                <div class="d-flex flex-row flex-lg-column flex-wrap justify-content-sm-between justify-content-evenly h-100">
+                    <button class="BtnNormal SizeMenu m-2">Add</button>
+                    <button class="BtnNormal SizeMenu m-2">Update</button>
+                    <button class="BtnNormal SizeMenu m-2">Delete</button>
+                    <button class="BtnNormal SizeMenu m-2">Cancel</button>
+                </div>
+            </div>
+            <div class="col-lg-8 mt-3">
+                <span class="SubTopic">Create or Update here</span>
+                <form method="post">
+                    <input asp-for="Category.Name" class="Text mt-3" placeholder="Category Name">
+                    <input asp-for="Category.Cost" class="Text mt-3" placeholder="Category Cost">
+                    <button class="BtnPrimary w-100 mt-5">Done</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"></partial>
+
+    <script>
+        
+        $(function(){
+
+            if('@Model?.DurationID' != ''){
+                $('SelectorDuration').val('@Model?.DurationID');
+            }else{
+                $('#SelectorSubDuration').prop('disabled',true);
+            }
+
+
+            $('select').change(function(){
+
+                if($(this).is('#SelectorDuration')){
+                    // $('#SelectorSubDuration').prop('selectedIndex',0);
+                    $('#SelectorSubDuration option').each(function(){
+                        $(this).remove();
+                    });
+                    $('#SelectorSubDuration').prop('disabled',true);
+                }
+
+                $('form#FormSelector').submit();
+            });
+
+        });
+    </script>
+}

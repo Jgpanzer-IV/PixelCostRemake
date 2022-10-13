@@ -1,0 +1,96 @@
+﻿@page
+@model MainMenuModel
+@{
+    ICollection<MainLebel> mainLabelContent = new List<MainLebel>();
+
+    if (Model.walletDTO != null)
+    {
+        mainLabelContent.Add(new MainLebel() {
+                    Text = "Name",
+                    Value = Model.walletDTO.Username
+                });
+
+        mainLabelContent.Add(new MainLebel() {
+                    Text = "Job Title",
+                    Value = Model.walletDTO.JobTitle ?? ""
+                });
+
+        mainLabelContent.Add(new MainLebel() {
+                    Text = "Saving",
+                    Value = Convert.ToString(Model.walletDTO.Balance) ?? ""
+                });
+
+        if (Model.walletDTO.TotalNumberExpense != 0 && Model.walletDTO.TotalNumberRevenue != 0)
+        {
+            mainLabelContent.Add(new MainLebel(){
+                Text = "Average Used",
+                Value = Convert.ToString(Model.walletDTO.TotalExpense / Model.walletDTO.TotalNumberExpense) ?? "0"
+            });
+        }
+
+        if (Model.walletDTO.TotalRevenue != null)
+        {
+            mainLabelContent.Add(new MainLebel(){
+                Text = "Total Revenue",
+                Value = Convert.ToString(Model.walletDTO.TotalRevenue) ?? "0"
+            });
+        }
+
+        if (Model.walletDTO.TotalExpense != null)
+        {
+            mainLabelContent.Add(new MainLebel() {
+                Text = "Total Expense",
+                Value = Convert.ToString(Model.walletDTO?.TotalExpense) ?? "0"
+            });
+        }
+
+    }
+
+    string? unExspectedProblem = Convert.ToString(ViewData["problem"]);
+
+}
+
+@*
+@if (!string.IsNullOrEmpty(unExspectedProblem))
+{
+    <div class="my-5 p-5 bg-danger">
+        <p class="text-white text-center lead">@unExspectedProblem</p>
+    </div>
+}*@
+
+<div class="row">
+
+    <div class="col-lg-3 text-center" >
+        <div class="d-flex flex-column justify-content-between h-100">
+            <a class="BtnMainMenu w-100" asp-area="Menu" asp-page="CollectionMenu">Collection</a>
+            <a class="BtnMainMenu w-100" asp-area="Manager" asp-page="SubDurationManager">Sub Duration Manager</a>
+            <a class="BtnMainMenu w-100" asp-area="Manager" asp-page="PrimaryExpenseManager">Primary Expense Manager</a>
+            <a class="BtnMainMenu w-100" asp-area="Manager" asp-page="ExpenseManager">Record Expense</a>
+            <a class="BtnMainMenu w-100" asp-area="Manager" asp-page="PaymentManager">Payment Option</a>
+            <a class="BtnMainMenu w-100" asp-area="Menu" asp-page="VisualizingMenu">Summery Term</a>
+        </div>
+    </div>
+
+    <div class="col-lg-4 bg-dark MainBody">
+        <div class="mt-5 text-center ">
+            <img src="~/images/ProfileExample.jpg" class="Profile" />
+            <div class="mt-2">
+                <a asp-page="Profile" asp-area="Auth" style="width:100px;" class="BtnNormal mx-4">Edit</a>
+                <a asp-page="Logout" asp-area="Auth" style="width:100px;" class="BtnPrimary mx-4">Sign out</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5 bg-dark MainBody" style="padding: 0%;">
+        
+        <div class="d-flex flex-column justify-content-evenly h-100">
+            @if (mainLabelContent.Count() != 0)
+            {
+                @for (int i = 0; i < mainLabelContent.Count(); i++)
+                    {
+                        <partial name="asset/_MainLabel" model="mainLabelContent.ElementAt(i)"></partial>
+                    }
+            }
+        </div>            
+
+    </div>
+</div>

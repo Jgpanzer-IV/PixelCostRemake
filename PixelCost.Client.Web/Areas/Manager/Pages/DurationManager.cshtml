@@ -1,0 +1,263 @@
+﻿@page
+@model DurationManagerModel
+@{
+    string financialTitle = "Financial informarion";
+    string editTitle = "Edit Duration here";
+    string primaryExpenseTitle = "Primary Expense's List";
+    string expenseTitle = "Expense's List";
+    string revenueTitle = "Revenue's List";
+    string subDurationTitle = "SubDuration's List";
+    string subDurationInfoTitle = "Summery category informatiom";
+    string categoryTitle = "Category's List";
+    string categoryInfoTitle = "Summery category informatiom";
+
+
+
+
+    var currentDate = DateTime.Now;
+    var startingDate = new DateTime(2022,07,01);
+    var endingDate = new DateTime(2022,07,31);
+
+    FullProgressBar durationProgress = new(){
+
+        Value01 = startingDate.ToShortDateString(),
+        Value02 = currentDate.ToShortDateString(),
+        Value03 = endingDate.ToShortDateString(),
+
+        Label01 = "Starting Date",
+        Label02 = "Current",
+        Label03 = "Ending Date",
+
+        Description = "Remain " + endingDate.Subtract(currentDate).Days.ToString() + " day will reach the end",
+        Progress = 35,
+        Information = "Pregress 35%"
+
+    };
+
+    FinancialStatus financialCost = new(label:"Cost",value:string.Format("{0:C}",12000),status:0);
+    FinancialStatus financialBalance = new(label:"Balance",value:string.Format("{0:C}",6930),status:1);
+    FinancialStatus financialExpense = new(label:"Expense",value:string.Format("{0:C}",3250),status:2);
+    FinancialStatus financialAverage = new(label:"Average Used",value:string.Format("{0:C}",120),status:3);
+
+    FinancialStatus sumCategoryCost = new(label: "Sum of Category cost", value: string.Format("{0:C}", 5000), status: 0);
+    FinancialStatus sumCategoryExpense = new(label: "Sum of Category expense", value: string.Format("{0:C}", 3000), status: 2);
+    FinancialStatus sumCategoryBalance = new(label: "Sum of Category balance", value: string.Format("{0:C}", 2000), status: 1);
+
+    FinancialStatus sumSubDurationCost = new(label: "Sum of Category cost", value: string.Format("{0:C}", 24000), status: 0);
+    FinancialStatus sumSubDurationExpense = new(label: "Sum of Category expense", value: string.Format("{0:C}", 9000), status: 2);
+    FinancialStatus sumSubDurationBalance = new(label: "Sum of Category balance", value: string.Format("{0:C}", 15000), status: 1);
+
+
+    IEnumerable<ListItem> primaryExpenses = new List<ListItem>(){
+        new (){
+            Name = "Room",
+            ValueElement = "6200",
+            Info = new DateTime(2022,06,14).ToShortDateString(),
+            Description = "True money wallet"
+        },
+        new (){
+            Name = "Services",
+            ValueElement = "1590",
+            Info = new DateTime(2022,06,15).ToShortDateString(),
+            Description = "Mobile Banking krungthai"
+        },
+        new (){
+            Name = "Debit cart",
+            ValueElement = "2200",
+            Info = new DateTime(2022,06,18).ToShortDateString(),
+            Description = "Mobile Banking SCB"
+        }
+    };
+    IEnumerable<ListItem> expenses = new List<ListItem>(){
+        new (){
+            Name = "Hotdog",
+            ValueElement = "60",
+            Info = new DateTime(2022,06,4).ToShortDateString(),
+            Description = "True money wallet"
+        },
+        new (){
+            Name = "Coffee",
+            ValueElement = "30",
+            Info = new DateTime(2022,06,6).ToShortDateString(),
+            Description = "True money wallet"
+        },
+        new (){
+            Name = "Coco",
+            ValueElement = "40",
+            Info = new DateTime(2022,06,7).ToShortDateString(),
+            Description = "Mobile Banking SCB"
+        },
+        new (){
+            Name = "Hamberger",
+            ValueElement = "120",
+            Info = new DateTime(2022,06,8).ToShortDateString(),
+            Description = "Mobile Banking SCB"
+        }
+    };
+    IEnumerable<ListItem> revenues = new List<ListItem>(){
+        new (){
+            Name = "Salary",
+            ValueElement = "40000",
+            Info = new DateTime(2022,06,4).ToShortDateString(),
+            Description = "True money wallet"
+        },
+        new (){
+            Name = "Selling game",
+            ValueElement = "1720",
+            Info = new DateTime(2022,06,6).ToShortDateString(),
+            Description = "True money wallet"
+        },
+        new (){
+            Name = "Selling ad space",
+            ValueElement = "8000",
+            Info = new DateTime(2022,06,7).ToShortDateString(),
+            Description = "Mobile Banking SCB"
+        },
+        new (){
+            Name = "Busines logic",
+            ValueElement = "55200",
+            Info = new DateTime(2022,06,8).ToShortDateString(),
+            Description = "Mobile Banking SCB"
+        }
+    };
+
+
+    List<ProgressItem> subDurationList = new(){
+        new(){
+            MainText = "Progress 63%",
+            ItemName = "Week 01",
+            InformationText = "Edit",
+            Value = "Cost : 15000",   
+            Progress = 63,
+        },
+         new(){
+            MainText = "Progress 0%",
+            ItemName = "Week 02",
+            InformationText = "Edit",
+            Value = "Cost : 20000",   
+            Progress = 0,
+        }      
+    };
+
+    List<ProgressItem> categoryList = new(){
+        new(){
+            MainText = "Balance 90%",
+            ItemName = "Food",
+            InformationText = "Edit",
+            Value = "Manage Category",
+            Progress = 90,
+        },
+         new(){
+            MainText = "Balance 45%",
+            ItemName = "Material raw",
+            InformationText = "Edit",
+            Value = "Manage Category",
+            Progress = 45,
+        }
+    };
+
+}
+
+<h1 class="text-center display-3 my-5">Duration Manager</h1>
+
+<div class="w-100 my-3">
+    <partial name="asset/_FullProgressBar" model="durationProgress"></partial>
+</div>
+
+<partial name="asset/_SectorTitle" model="financialTitle"></partial>
+
+
+<div class="w-100 my-3 d-flex flex-md-row flex-wrap justify-content-evenly ">
+    <div style="width: 300px;">
+        <partial name="asset/_FinancialStatus" model="financialCost"></partial>
+    </div>
+    <div style="width: 300px;">
+        <partial name="asset/_FinancialStatus" model="financialBalance"></partial>
+    </div>
+    <div style="width: 300px;">
+        <partial name="asset/_FinancialStatus" model="financialExpense"></partial>
+    </div>
+    <div style="width: 300px;">
+        <partial name="asset/_FinancialStatus" model="financialAverage"></partial>
+    </div>
+</div>
+
+<partial name="asset/_SectorTitle" model="editTitle"></partial>
+
+<form method="post">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <input class="Text mt-3" asp-for="Duration.DurationName" placeholder="Duration's Name">
+            <input class="Date mt-3" asp-for="Duration.StartingDate" placeholder="Starting Date">
+        </div>
+        <div class="col-md-5">
+            <input class="Text mt-3" asp-for="Duration.DurationCost" placeholder="Duration's Cost">
+            <input class="Date mt-3" asp-for="Duration.EndingDate" placeholder="Ending Date">
+        </div>
+    </div>
+    <div class="row justify-content-center my-4">
+        <div class="col-10">
+            <button type="submit" asp-page-handler="Update" class="btn btn-success w-100 text-center text-white">Update</button>
+        </div>
+    </div>
+</form>
+
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <a asp-page-handler="Achive" class="btn btn-info text-white text-center w-100">Achive</a>
+    </div>
+    <div class="col-md-2">
+        <a asp-page-handler="Delete" class="btn btn-danger text-white text-center w-100">Delete</a>
+    </div>
+    <div class="col-md-4">
+        <a asp-page-handler="Summarize" class="btn btn-info text-white text-center w-100">Summarize</a>
+    </div>
+</div>
+
+<div class="row my-5">
+    <div class="col-lg">
+        <partial name="asset/_SectorTitle" model="primaryExpenseTitle" />
+        <partial name="asset/_ListMenu" model="primaryExpenses"></partial>
+        <a asp-area="Manager" asp-page="PrimaryExpenseManager" class="LinkItem w-100 BtnLink">Manage Primary expense</a>
+    </div>
+    <div class="col-lg">
+        <partial name="asset/_SectorTitle" model="expenseTitle" />
+        <partial name="asset/_ListMenu" model="expenses" />
+        <a class="LinkItem w-100 BtnLink">Record Expense</a>
+    </div>
+    <div class="col-lg">
+        <partial name="asset/_SectorTitle" model="revenueTitle" />
+        <partial name="asset/_ListMenu" model="revenues" />
+        <a class="LinkItem w-100 BtnLink">Record Revenue</a>
+    </div>
+</div>
+
+<div class="row my-5">
+    <div class="col-md">
+        <partial name="asset/_SectorTitle" model="categoryTitle" />
+        <partial name="template/_TPSubDurationLinkItem" model="categoryList"></partial>
+
+    </div>
+    <div class="col-md-5">
+        <partial name="asset/_SectorTitle" model="categoryInfoTitle" />
+        <partial name="asset/_FinancialStatus" model="sumCategoryCost" />
+        <partial name="asset/_FinancialStatus" model="sumCategoryExpense" />
+        <partial name="asset/_FinancialStatus" model="sumCategoryBalance" />
+    </div>
+</div>
+
+
+<div class="row my-5">
+    <div class="col-md">
+        <partial name="asset/_SectorTitle" model="subDurationTitle" />
+        <partial name="template/_TPSubDurationLinkItem" model="subDurationList"></partial>
+
+    </div>
+    <div class="col-md-5">
+        <partial name="asset/_SectorTitle" model="subDurationInfoTitle" />
+        <partial name="asset/_FinancialStatus" model="sumSubDurationCost" />
+        <partial name="asset/_FinancialStatus" model="sumSubDurationExpense" />
+        <partial name="asset/_FinancialStatus" model="sumSubDurationBalance" />
+    </div>
+
+</div>

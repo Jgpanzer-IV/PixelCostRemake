@@ -1,0 +1,11 @@
+@model ShortProgressBar
+
+<div class="w-100 h-auto">
+    <span class="LabelText">@Model?.Label</span>
+    @if(Model != null){
+        <div class="ProgressPipContainer">
+            <div class="ProgressPipBody" style="width: @(Model?.ValueProgress ?? 0)%;"></div>
+        </div>
+    }
+    <span class="ParaghrapText">@Model?.Description</span>
+</div>

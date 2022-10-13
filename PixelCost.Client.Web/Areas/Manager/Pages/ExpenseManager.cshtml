@@ -1,0 +1,93 @@
+﻿@page
+@model ExpenseManagerModel
+@{
+
+}
+
+<h1 class="display-3 text-center mt-5">Expenses Recording</h1>
+
+<div class="my-4">
+    <form id="SelectID" method="get">
+        <div class="row">
+            <div class="col-lg">
+                <label class="InfoText">Select Duration</label>
+                <select id="durationID" asp-for="DurationID" asp-items="Model.DurationList" class="StyleWhite"></select>
+            </div>
+            <div class="col-lg">
+                <label class="InfoText">Select Sub Duration</label>
+                <select id="subDurationID" asp-for="SubDurationID" asp-items="Model?.SubDurationList" class="StyleWhite" ></select>
+            </div>
+            <div class="col-lg">
+                <label class="InfoText">Select Category</label>
+                <select id="categoryID" asp-for="CategoryID" asp-items="Model?.CategoryList" class="StyleWhite"></select>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="my-4">
+    <span class="SubTopic">Category Financial Information</span>
+    <div class="row">
+        @for (int i = 0; i < (Model?.CategoryFinancialInfo?.Count() ?? 0); i++)
+        {
+            <div class="col-sm-6 col-lg-3">
+                <partial name="asset/_FinancialStatus" model="Model?.CategoryFinancialInfo?.ElementAt(i)"></partial>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="my-4">
+
+    <div class="row">
+        <div class="col-lg mt-4">
+            <span class="SubTopic">Expenses's List</span>
+            <div class="mt-3">
+                <partial name="asset/_ListMenu" model="Model?.ExpenseList"></partial>
+            </div>
+            
+        </div>
+
+        <div class="col-lg mt-4">
+            <span class="SubTopic">Record expense here</span>
+            <div class="row mt-3">
+                <div class="col-lg-4">
+                    <div class="d-flex flex-row flex-lg-column flex-wrap justify-content-evenly justify-content-sm-between h-100">
+                        <button id="AddBtn" class="BtnNormal m-1 SizeMenu">Add</button>
+                        <button id="UpdateBtn" class="BtnNormal m-1 SizeMenu">Update</button>
+                        <button id="DeleteBtn" class="BtnNormal m-1 SizeMenu">Delete</button>
+                        <button id="CancelBtn" class="BtnNormal m-1 SizeMenu">Cancel</button>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <select asp-for="Expense.PaymentOption" asp-items="Model?.PaymentOptionList" class="StyleWhite"></select>
+                    <input asp-for="Expense.Name" class="Text mt-2">
+                    <input asp-for="Expense.Price" class="Text mt-2">
+                    <input asp-for="Expense.RecordingDate" class="Date mt-2">
+                    <button type="submit" class="BtnPrimary mt-4 w-100">Done</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <partial name="_ValidationScriptsPartial"></partial>
+
+    <script>
+
+        $(function(){
+            $('form select').each(function(){
+                $(this).change(function(){
+                    $('form#SelectID').submit();
+                    alert('Hello');
+                });
+            });
+        });
+
+    </script>
+
+}

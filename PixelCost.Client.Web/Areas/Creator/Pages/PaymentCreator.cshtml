@@ -1,0 +1,49 @@
+﻿@page "{id:long?}"
+@model WalletCreatorModel
+@{
+    string? problem = Convert.ToString(ViewData["problem"]);
+}
+
+@*
+@if (!string.IsNullOrEmpty(problem))
+{
+    <div class="bg-danger">
+        <p class="text-white lead text-center">@problem</p>
+    </div>
+}
+*@
+
+<h1 class="display-3 text-center my-5">Create new wallet</h1>
+
+<form method="post" asp-page-handler="Create">
+    <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input type="hidden" asp-for="paymentForm.Id"/>
+                <div class="form-group mb-3">
+                    <label asp-for="paymentForm.Name" class="InfoText"></label>
+                    <span asp-validation-for="paymentForm.Name" class="ErrorValidation"></span>
+                    <input asp-for="paymentForm.Name" class="Text">
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="paymentForm.Type" class="InfoText"></label>
+                    <span asp-validation-for="paymentForm.Type" class="ErrorValidation"></span>
+                    <select asp-for="paymentForm.Type" asp-items="Model.paymentTypeList" class="StyleWhite"></select>
+                </div>
+                @if (Model.id == null)
+                {
+                    <button type="submit" asp-page-handler="Create" class="BtnAction w-100">Create</button>
+                }
+                else
+                {
+                    <button type="submit" asp-page-handler="Update" class="BtnAction w-100">Update</button>
+                }
+            </div>
+            <div class="col-md-3">
+                <img class="w-100 h-75 shadow mb-3 d-block">
+                <a asp-page-handler="Delete" asp-route-id="@Model.id" class="BtnPrimary w-100">Delete this wallet</a>        
+            </div>
+    </div>
+</form>
+
+

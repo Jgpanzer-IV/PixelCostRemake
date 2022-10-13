@@ -1,0 +1,31 @@
+@model FullProgressBar
+
+
+
+
+<div class="w-100 h-auto">
+
+    <div class="d-flex flex-row justify-content-between">
+        <span class="LabelText">@Model?.Value01</span>
+        <span class="LabelText">@Model?.Value02</span>
+        <span class="LabelText">@Model?.Value03</span>
+    </div>
+
+    <div class="d-flex flex-row justify-content-between">
+        <span class="PlaceHolder">@Model?.Label01</span>
+        <span class="PlaceHolder">@Model?.Label02</span>
+        <span class="PlaceHolder">@Model?.Label03</span>
+    </div>
+
+    @if(Model != null){
+        <div class="ProgressPipContainer">
+            <div class="ProgressPipBody" style="width: @(Model?.Progress ?? 0)%;"></div>
+        </div>
+    }
+
+    <div class="d-flex flex-row justify-content-between">
+        <span class="LabelText me-4">@Model?.Description</span>
+        <span class="LabelText">@Model?.Information</span>
+    </div>
+
+</div>

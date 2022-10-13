@@ -1,0 +1,138 @@
+﻿@page
+@model PrimaryExpenseManager
+@{
+
+    List<ListItem> items = new(){
+        new ListItem(){
+            Name="Home",
+            ValueElement="8,670 B"
+        },
+        new ListItem(){
+            Name="Services",
+            ValueElement="4,250 B"
+        },
+        new ListItem(){
+            Name="Network",
+            ValueElement="1,200 B"
+        },
+        new ListItem(){}
+    };
+
+    var currentDate = DateTime.Now;
+    var startingDate = new DateTime(2022,07,01);
+    var endingDate = new DateTime(2022,07,31);
+
+    FullProgressBar durationProgress = new(){
+
+        Value01 = "0 B",
+        Value02 = "8,693 B",
+        Value03 = "10,000 B",
+
+        Label01 = "Empty point",
+        Label02 = "Current balance",
+        Label03 = "Cost",
+
+        Description = "Remain " + endingDate.Subtract(currentDate).Days.ToString() + " day will reach the end",
+        Progress = 35,
+        Information = "Pregress 35%"
+    
+    };
+
+    FinancialStatus totalAsPercent = new(label:"As Percentang",value:string.Format("{0} %",35),status:1);
+    FinancialStatus totalAsNumberic = new(label:"As Numberic",value:string.Format("{0:C}",6930),status:1);
+
+}
+
+<h1 class="text-center MainTitle my-5">Primary Expense Manager</h1>
+<span class="SubTopic">Duration Information</span>
+
+<div class="row">
+    <div class="col-lg-4">
+        <label class="InfoText">Select Term to edit</label>
+        <select name="SelectedTerm" class="StyleWhite">
+            <option class="m-1" value="Term 01">Month 01</option>
+            <option value="Term 02">Month 02</option>
+            <option value="Term 03">Month 03</option>
+        </select>
+    </div>
+    
+    <hr class="d-lg-none my-3"/>
+    
+    <div class="col-lg">
+        <partial name="asset/_FullProgressBar" model="durationProgress"></partial>
+    </div>
+
+    <hr class="d-lg-none my-3"/>
+
+    
+</div>
+
+<div class="my-4">
+    <span class="SubTopic my-2 text-center">Duration's financial information</span>
+    <div class="row">
+        <div class="col-md">
+            <partial name="asset/_FinancialStatus" model="totalAsPercent"></partial>
+        </div>
+        <div class="col-md">
+            <partial name="asset/_FinancialStatus" model="totalAsNumberic"></partial>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-6 mt-5">
+        <span class="SubTopic">Primary Expense</span>
+        <partial name="asset/_ListMenu" model="items"></partial>
+    </div>
+
+    <div class="col-lg-6 mt-5">
+        <div class="d-flex h-100 flex-column flex-md-row justify-content-between">
+            <div class=" mb-5 my-md-0 mx-0 mx-md-5">
+                <div class="d-flex h-100 flex-row flex-md-column flex-wrap justify-content-evenly">
+                    <button id="AddBtn" type="menu" class="BtnNormal m-1 SizeMenu">Add</button>
+                    <button id="UpdateBtn" type="menu" class="BtnNormal m-1 SizeMenu">Update</button>
+                    <button id="DeleteBtn" type="menu" class="BtnNormal m-1 SizeMenu">Delete</button>
+                    <button id="CancelBtn" type="menu" class="BtnNormal m-1 SizeMenu">Cancel</button>
+                </div>
+            </div>
+            <div class="">
+                <span class="SubTopic">Primary Expense Manager</span>
+                <div class="my-4">
+                    <input class="Text" placeholder="Name Order" id="ExpenseName" />
+                </div>
+                <div class="my-4">
+                    <input class="Text" placeholder="Price Order" id="ExpensePrice" />
+                </div>
+                <div class="my-4">
+                    <select name="SelectOption" class="Text">
+                        <option value="MobileBanking">Mobile Banking</option>
+                        <option value="True Money">True money wallet</option>
+                        <option value="Cache">Cache</option>
+                    </select>
+                </div>
+                <input type="submit" class="BtnPrimary w-100" value="Done"/>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"></partial>
+    <script>
+        $(function(){
+            $('Button').each(function(){
+                $(this).on('click',function(arg){
+                    arg.preventDefault();
+
+                    if($(this).prop('id') == 'AddBtn'){
+                        alert('Test from Add');
+                    }
+
+                });
+            });
+
+        });
+
+    </script>
+}
