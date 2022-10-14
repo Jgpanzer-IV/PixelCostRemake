@@ -1,0 +1,35 @@
+﻿@page
+@model PixelCost.Service.Identity.Pages.EmailConfirmation.IndexModel
+@{
+
+	string email = (string) ViewData["Email"];
+	string message = (string)ViewData["Message"];
+}
+
+<h1 class="text-center my-5">Email Confirmation</h1>
+
+<div class="bg-danger text-white my-5 py-3">
+	<span>Thank you for join our service.</span>
+</div>
+
+<p class="my-3">@ViewData["Message"]</p>
+
+@if (!string.IsNullOrEmpty(email))
+{
+	<span>Didn't receive the email confirmation link.</span>
+	
+	<form method="post">
+		<input value="@email" name="Email" type="hidden" class="d-inline mx-3">
+		<input type="submit" class="text-danger bg-none d-inline" value="Send again">
+	</form>
+
+}
+
+<div class="my-5">
+	<a asp-page-handler="Login">
+		<div class="btn btn-danger">Sign in</div>
+	</a>
+	<a href="@Url.PageLink("/Account/Register/Index")">
+		<div class="btn btn-success">Sign up</div>
+	</a>
+</div>
