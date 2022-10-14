@@ -34,7 +34,8 @@ try
 }
 catch (Exception ex) when (ex.GetType().Name is not "StopTheHostException") // https://github.com/dotnet/runtime/issues/60600
 {
-    Log.Fatal(ex, "Unhandled exception");
+    if (ex.GetType().Name != "StopTheHostException")
+        Log.Fatal(ex, "Unhandled exception");
 }
 finally
 {
