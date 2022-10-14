@@ -1,0 +1,311 @@
+﻿@page 
+@model VisualizingMenuModel
+@{
+    // Convert Retrieved item to content item
+    
+    // Duration content container
+    List<ListItem>? primaryListItem = null;
+    FullProgressBar? durationProgress = null;
+    FinancialStatus? costDuration = null;
+    FinancialSummarizing? expenseSummarizing = null;
+    FinancialSummarizing? balanceSummarizing = null;
+
+    // SubDuration content container
+    FullProgressBar? subDurationProgress = null;
+    FinancialSet? subDurationFinancial = null;
+ 
+    // Category content container
+    ShortProgressBar? categoryBalance = null;
+    FinancialSet? categoryFinancial = null;
+    FinancialStatus? categoryTotalOrder = null;
+    FinancialStatus? categoryExpensePerOrder = null;
+    
+    // Pie chart content variable container 
+    List<string>? PaymentLabel = null;
+    List<string>? PaymentValueDuration = null;
+    
+    // Line chart content variable
+    List<decimal>? RecordingPrice = null;
+    List<string>? RecordingDate = null;
+
+    // Create content object
+    // Process data if duration id have specified.
+    if(Model?.SelectedDuration != null){
+        
+        // Create content for selected duration if  
+        durationProgress = new(Model.SelectedDuration);
+        costDuration = new("Cost",Model.SelectedDuration.Cost.ToString(),0);
+        expenseSummarizing = new(Model.SelectedDuration,'e');
+        balanceSummarizing = new(Model.SelectedDuration,'b');
+        primaryListItem = new();
+        for (ushort i=0; i < (Model?.SelectedDuration?.PrimaryExpenses?.Count() ?? 0); i++){
+            primaryListItem.Add(new ListItem(Model?.SelectedDuration?.PrimaryExpenses?.ElementAt(i) ?? null));
+        }
+                
+        // 1. Get all non-repeat value from PaymentID in every section that storing this value
+        PaymentLabel = new();
+
+        // Get payment label from expense
+        if (Model?.SelectedDuration?.PrimaryExpenses != null){
+            PaymentLabel.AddRange(Model.SelectedDuration.PrimaryExpenses
+                .Select(e => e.PaymentMethodID)
+                .Distinct()
+                .ToList()
+            );
+        }
+
+        // Get payment label from Expense recording in every sub duration or entrie duration.
+        Model?.SelectedDuration?.SubDurations?.ForEach(
+            e => 
+                e.Categories?.ForEach(
+                    c => c.ExpenseOrders?.ForEach(ex => {
+                        if (PaymentLabel.FirstOrDefault(ex.PaymentID) == null)
+                            PaymentLabel.Add(ex.PaymentID);
+                    })
+                )
+        );
+
+        // 2.Store how many time repeat in each label
+        // Duration = count of paymentID in Primary and Expense order
+        PaymentValueDuration = new();
+        int getterRepeat = 0;
+        PaymentLabel?.ForEach(e=>{
+            getterRepeat += Model?.SelectedDuration?.PrimaryExpenses?.Where(pe => pe.PaymentMethodID == e).Count() ?? 0;
+            Model?.SelectedDuration?.SubDurations?.ForEach(es=>{
+                es.Categories?.ForEach(ec=>{
+                    getterRepeat += ec.ExpenseOrders?.Where(ex => ex.PaymentID == e).Count() ?? 0;
+                });
+            });
+            PaymentValueDuration.Add(getterRepeat.ToString());
+            getterRepeat = 0;
+        });
+
+        // Process data in sub duration if it have specified.
+        if (Model?.SelectedSubDuration != null){
+            subDurationProgress = new(Model.SelectedSubDuration);
+            subDurationFinancial = new(Model.SelectedSubDuration);
+
+            // Process data in category if it have specified
+            if (Model?.SelectedCategory != null){
+
+                categoryBalance = new(Model.SelectedCategory);
+                categoryFinancial = new(Model.SelectedCategory);
+                categoryTotalOrder = new("Total Order",Model?.SelectedCategory?.ExpenseOrders?.Count().ToString());
+                categoryExpensePerOrder = new("Expense per order",(Model?.SelectedCategory.Expense / Model?.SelectedCategory?.ExpenseOrders?.Count()).ToString());
+
+                RecordingPrice = new();
+                RecordingDate = new();
+                
+                Model?.SelectedCategory?.ExpenseOrders?.ForEach(e => {
+                    RecordingPrice.Add(e.OrderPrice);
+                    RecordingDate.Add(e.OrderDate.ToShortDateString());
+                });
+            }
+        }
+    }
+    
+}
+
+<h1 class="display-3 text-center my-5">Summarizing Duration</h1>
+
+<div class="w-100 text-white bg-dark p-4">
+    <span class="display-6">Duration Information</span>
+</div>
+
+
+<div class="row">
+    <div class="col-lg">
+        <div class="my-4">
+            <form method="get">
+                <label class="InfoText">Select Duration</label>
+                <select asp-for="DurationID" asp-items="Model?.DurationList" class="StyleWhite"></select>
+            </form>
+        </div>
+        @if(Model?.SelectedDuration != null){
+            <div class="my-4">
+                <span class="SubTopic">Primary Expense's lsit</span>
+                <partial name="asset/_ListMenu" model="primaryListItem"></partial>
+            </div>
+        }
+    </div>
+    <div class="col-lg-5">
+        <div class="my-5">
+            <partial name="asset/_FullProgressBar" model="durationProgress"></partial>
+        </div>
+
+        @if (Model?.SelectedDuration != null){
+            <div class="my-4" style="height: auto; width: 100%;">
+                <canvas id="paymentDuration" class="w-100 h-100"></canvas>
+            </div>
+        }
+
+    </div>
+    <div class="col-lg">
+        @if(Model?.SelectedDuration != null){
+            <div class="my-4">
+                <partial name="asset/_FinancialStatus" model="costDuration"></partial>
+            </div>
+            <div class="my-4">
+                <partial name="asset/_FinancialSummarizing" model="expenseSummarizing"></partial>
+            </div>
+            <div class="my-4">
+                <partial name="asset/_FinancialSummarizing" model="balanceSummarizing"></partial>
+            </div>
+        }
+    </div>
+</div>
+
+
+<div class="w-100 text-white bg-dark p-2 mt-5">
+    <span class="display-6">Sub Duration summarization</span>
+</div>
+
+<div class="row">
+    <div class="col-lg-4 my-4">
+        <form method="get" asp-route-DurationID="@Model?.DurationID">
+            <label class="InfoText">Select Sub Duration</label>
+            <select asp-for="SubDurationID" asp-items="Model?.SubDurationList" class="StyleWhite"></select>
+        </form>
+    </div>
+    <div class="col-lg-8 my-5">
+        <partial name="asset/_FullProgressBar" model="subDurationProgress"></partial>
+    </div>
+</div>
+
+@if (Model?.SelectedSubDuration != null){
+    <div class="d-flex flex-row justify-content-lg-between justify-content-evenly flex-wrap">
+        <div style="width: 240px; margin: 1.6rem;">
+            <partial name="asset/_FinancialStatus" model="subDurationFinancial?.Cost"></partial>
+        </div>
+        <div style="width: 240px; margin: 1.6rem;">
+            <partial name="asset/_FinancialStatus" model="subDurationFinancial?.Balance"></partial>
+        </div>
+        <div style="width: 240px; margin: 1.6rem;">
+            <partial name="asset/_FinancialStatus" model="subDurationFinancial?.Expense"></partial>
+        </div>
+        <div style="width: 240px; margin: 1.6rem;">
+            <partial name="asset/_FinancialStatus" model="subDurationFinancial?.AverageUsed"></partial>
+        </div>
+    </div>
+}
+
+<div class="w-100 text-white bg-dark p-2 mt-5">
+    <span class="display-6">Category summarization</span>
+</div>
+
+<div class="row">
+    <div class="col-lg-4 my-4">
+        <form method="get" asp-route-SubDurationID="@Model?.SubDurationID">
+            <label class="InfoText">Select Category</label>
+            <select asp-for="CategoryID" asp-items="Model?.CategoryList" class="StyleWhite"></select>
+        </form>
+    </div>
+    <div class="col-lg-8 my-5">
+        <partial name="asset/_ShortProgressBar" model="categoryBalance"></partial>
+    </div>
+</div>
+
+@if(Model?.SelectedCategory != null){
+    <div class="d-flex flex-row justify-content-lg-between justify-content-evenly flex-wrap">
+        <div style="width: 300px; margin: 1rem;">
+            <partial name="asset/_FinancialStatus" model="categoryFinancial?.Cost"></partial>
+            <partial name="asset/_FinancialStatus" model="categoryFinancial?.Balance"></partial>
+        </div>
+        <div style="width: 300px; margin: 1rem;">
+            <partial name="asset/_FinancialStatus" model="categoryFinancial?.Expense"></partial>
+            <partial name="asset/_FinancialStatus" model="categoryFinancial?.AverageUsed"></partial>
+        </div>
+        <div style="width: 300px; margin: 1rem;">
+            <partial name="asset/_FinancialStatus" model="categoryTotalOrder"></partial>
+            <partial name="asset/_FinancialStatus" model="categoryExpensePerOrder"></partial>
+        </div>
+    </div>
+}
+
+@if (Model?.SelectedCategory != null){
+    <div class="my-5 w-100 h-auto">
+        <canvas id="ExpenseChart"></canvas>
+    </div>
+}
+
+
+
+
+@section Scripts{
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    
+    @* Script for chart javascript library *@
+    <script>
+        
+        // Serialize from C# collection into javascript array
+        var pieDurationLabel = JSON.parse('@Html.Raw(Json.Serialize(PaymentLabel))');
+        var pieDurationValue = JSON.parse('@Html.Raw(Json.Serialize(PaymentValueDuration))');
+        
+        var barColors = [
+        "#b91d47",
+        "#00aba9",
+        "#2b5797",
+        "#e8c3b9",
+        "#1e7145"
+        ];
+
+        new Chart("paymentDuration", {
+        type: "pie",
+        data: {
+            labels: pieDurationLabel,
+            datasets: [{
+            backgroundColor: barColors,
+            data: pieDurationValue
+            }]
+        },
+        options: {
+            title: {
+            display: true,
+            text: "Payment ratio of @Model?.SelectedDuration?.Name"
+            }
+        }
+        });
+
+
+        var xValues = JSON.parse('@Html.Raw(Json.Serialize(RecordingDate))');
+        var yValues = JSON.parse('@Html.Raw(Json.Serialize(RecordingPrice))');
+
+        new Chart("ExpenseChart", {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+            fill: false,
+            lineTension: 0,
+            backgroundColor: "rgba(0,0,255,1.0)",
+            borderColor: "rgba(0,0,255,0.1)",
+            data: yValues
+            }]
+        },
+        options: {
+            legend: {display: false},
+            scales: {
+            yAxes: [{ticks: {min: 0, max:parseInt(@(RecordingPrice?.OrderByDescending(e => e).FirstOrDefault())) }}],
+            }
+        }
+        });
+
+    </script>
+
+    @* Script for DOM managment using jquery *@
+    <script>
+        
+        $(function(){
+
+            $('select').each(function(){
+                $(this).change(function(){
+                    $(this).parent().submit();
+                });
+            });
+
+        });
+
+    </script>
+
+}

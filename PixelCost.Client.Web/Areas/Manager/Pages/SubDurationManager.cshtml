@@ -1,0 +1,115 @@
+﻿@page
+@model SubDurationManager
+@{
+
+    ViewData["Title"] = "Sub Duration Manager";
+
+    FinancialStatus durationBalance = new FinancialStatus(label:"Duration Balance","35,600 B",1);
+
+    string durationSectorTitle = "Duration";
+
+    List<ProgressItem> progressList = new(){
+        new(){
+            MainText = "Progress 63%",
+            ItemName = "Week 01",
+            InformationText = "Edit",
+            Value = "Manage Category",   
+            Progress = 63,
+        },
+         new(){
+            MainText = "Progress 0%",
+            ItemName = "Week 02",
+            InformationText = "Edit",
+            Value = "Manage Category",   
+            Progress = 0,
+        }      
+    };
+
+    FinancialStatus financialCost = new(label:"Cost",value:string.Format("{0:C}",12000),status:0);
+    FinancialStatus financialBalance = new(label:"Balance",value:string.Format("{0:C}",6930),status:1);
+    FinancialStatus financialExpense = new(label:"Expense",value:string.Format("{0:C}",3250),status:2);
+    FinancialStatus financialAverage = new(label:"Average Used",value:string.Format("{0:C}",120),status:3);
+
+
+}
+
+<h1 class="display-3 mt-5 text-center">Sub duration</h1>
+
+<partial name="asset/_SectorTitle" model="durationSectorTitle" />
+
+<div class="row">
+    <div class="col-lg mt-5">
+        <label class="InfoText">Select duration</label>
+        <select class="StyleWhite">
+            <option>Month 01</option>
+            <option>Month 02</option>
+        </select>
+    </div>
+    <div class="col-lg mt-5 mt-lg-auto">
+        <partial name="asset/_SideFinancialStatus" model="durationBalance"></partial>        
+    </div>
+</div>
+    
+<div class="row">
+    <div class="col-lg mt-5">
+        <span class="SubTopic">Exists Sub duration</span>
+        <div class="d-flex flex-column">
+            @for (int i = 0; i < progressList.Count(); i++)
+            {
+                <partial name="asset/_ProgressItem" model="progressList.ElementAt(i)"></partial>
+            }
+        </div>
+    </div>
+    <div class="col-lg mt-5">
+        <span class="SubTopic text-center">Financial information</span>
+        <div class="d-flex flex-wrap justify-content-lg-between justify-content-evenly ms-0 ms-xl-5 mt-2">
+            <div class="StatusSize">
+                <partial name="asset/_FinancialStatus" model="financialCost"></partial>
+            </div>                
+            <div class="StatusSize">
+                <partial name="asset/_FinancialStatus" model="financialBalance"></partial>
+            </div>
+        </div>
+        <div class="d-flex flex-wrap justify-content-lg-between justify-content-evenly ms-0 ms-xl-5 mt-2">
+            <div class="StatusSize">
+                <partial name="asset/_FinancialStatus" model="financialAverage"></partial>
+            </div>
+            <div class="StatusSize">
+                <partial name="asset/_FinancialStatus" model="financialExpense"></partial>
+            </div>
+            
+        </div>
+
+        <span class="SubTopic text-center mt-4">Input Form</span>
+        <form method="post">
+            <div class="d-flex flex-column flex-xl-row justify-content-evenly mt-2">
+                <div class="d-flex flex-wrap flex-row flex-xl-column justify-content-between ms-0 ms-xl-5">
+                    <button class="BtnNormal mt-3 SizeMenu">Add</button>
+                    <button class="BtnNormal mt-3 SizeMenu">Update</button>
+                    <button class="BtnNormal mt-3 SizeMenu">Delete</button>
+                    <button class="BtnNormal mt-3 SizeMenu">Cancel</button>
+                </div>
+                <div class="d-flex flex-column justify-content-center w-100 ms-0 ms-xl-5">
+                    <div class="form-group my-2">
+                        <span asp-validation-for="SubDuration.Name" class=" ErrorValidation"></span>
+                        <input asp-for="SubDuration.Name" class="Text">
+                    </div>
+                    <div class="form-group my-2">
+                        <span asp-validation-for="SubDuration.Cost" class="ErrorValidation"></span>            
+                        <input asp-for="SubDuration.Cost" class="Text">
+                    </div>
+                    <div class="form-group my-2">
+                        <span asp-validation-for="SubDuration.StartingDate" class="ErrorValidation"></span>            
+                        <input asp-for="SubDuration.StartingDate" class="Date">
+                    </div>
+                    <div class="form-group my-2">
+                        <span asp-validation-for="SubDuration.EndingDate" class="ErrorValidation"></span>            
+                        <input asp-for="SubDuration.EndingDate" class="Date">
+                    </div>
+                </div>
+            </div>
+        </form>
+        <a asp-area="Manager" asp-page="CategoryManager" class="d-block BtnNormal text-center ms-0 ms-xl-5 mt-4">Manage Category</a>
+        <a asp-area="Menu" asp-page="MainMenu" class="d-block BtnPrimary mt-2 ms-0 ms-xl-5">Done</a>
+    </div>
+</div>

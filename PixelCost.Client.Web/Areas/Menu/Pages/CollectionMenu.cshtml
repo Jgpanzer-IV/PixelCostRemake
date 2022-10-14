@@ -1,0 +1,83 @@
+﻿@page
+@model CollectionMenuModel
+@{
+
+    List<ProgressItem> progressList = new(){
+        new(){
+            MainText = "Progress 45%",
+            ItemName = "Month 01",
+            Description = "Remain 16 day",
+            InformationText = "Info",
+            Value = "Edit",   
+            Progress = 45,
+        },
+         new(){
+            MainText = "Progress 80%",
+            ItemName = "New Year invesment",
+            Description = "Remain 5 day",
+            InformationText = "Info",
+            Value = "Edit",   
+            Progress = 80,
+        }      
+    };
+
+    List<ProgressItem> historyList = new(){
+        new(){
+            MainText = "Progress 100%",
+            ItemName = "Treading Crypto",
+            Description = "Remain 0 day",
+            InformationText = "Achived",
+            Value = "Balance : 1,390 B",   
+            Progress = 100,
+        },
+         new(){
+            MainText = "Progress 2%",
+            ItemName = "New year Travel",
+            Description = "Remain 5 day",
+            InformationText = "Removed",
+            Value = "Balance : 11,450 B",   
+            Progress = 2,
+        }      
+    };
+
+}
+
+
+<h1 class="display-2 text-center">Duration Collections</h1>
+
+<div class="row">
+    <div class="col-lg-6">
+
+        <div class="MainLabel">
+            <span class="SubTopic display-5 text-center text-lg-start text-light">Current Duration</span>
+        </div>
+
+        <div class="mx-3">
+            <partial name="template/_TPDurationLinkItem" model="progressList"></partial>
+        </div>
+        <div class="mx-3">
+            <a class="BtnPrimary w-100 text-center" asp-area="Creator" asp-page="DurationCreator">Create new Duration</a>
+        </div>
+
+    </div>
+   
+    <div class="col-lg-6">
+        <div class="MainLabel">
+            <span class="SubTopic display-5 text-light text-center text-lg-end">History</span>
+        </div>
+
+        <div class="d-flex flex-column mx-3">
+            @for (int i = 0; i < historyList.Count(); i++)
+            {   
+                <div class="w-100 h-auto mb-3">
+                    <partial name="asset/_ProgressItem" model="historyList.ElementAt(i)"></partial>
+                </div>
+            }
+        </div>
+
+        <div class="mx-3">
+            <a class="BtnNormal w-100">Retrieve</a>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,160 @@
+﻿@page
+@model WalletManagerModel
+@{
+    string? unExspectedError = Convert.ToString(ViewData["problem"]);
+
+    MainLebel? paymentType = null;
+    MainLebel? paymentRevenue = null;
+    MainLebel? paymentBalance = null;
+    MainLebel? paymentExpense = null;
+
+    MainLebel? paymentTotalOrderCount = null;
+    MainLebel? paymentRevenueCount = null;
+    MainLebel? paymentExpenseCount = null;
+
+    MainLebel? paymentAverageUsed = null; 
+
+    if (Model.SelectedPayment != null)
+    {
+        paymentType = new(){
+            Text = "Type",
+            Value = Model.SelectedPayment.PaymentType
+        };
+        paymentTotalOrderCount = new()
+        {
+            Text = "Total Order count",
+            Value = Convert.ToString(Model.SelectedPayment.PaymentRevenueCount + Model.SelectedPayment.PaymentExpenseCount)
+        };
+        paymentRevenue = new()
+        {
+            Text = "Revenue",
+            Value = Convert.ToString(Model.SelectedPayment.PaymentRevenue ?? 0)
+        };
+        paymentRevenueCount = new()
+        {
+            Text = "Revenue Count",
+            Value = Convert.ToString(Model.SelectedPayment.PaymentRevenueCount)
+        };
+        paymentBalance = new() {
+            Text = "Balance",
+            Value = Convert.ToString(Model.SelectedPayment.PaymentBalance ?? 0)
+        };
+        paymentExpense = new(){
+            Text = "Expense",
+            Value = Convert.ToString(Model.SelectedPayment.PaymentExpense ?? 0)
+        };
+        paymentExpenseCount = new() {
+            Text = "Expense Count",
+            Value = Convert.ToString(Model.SelectedPayment.PaymentExpenseCount)
+        };
+        paymentAverageUsed = new(){
+            Text = "Average used per day",
+            Value = Convert.ToString(Model.SelectedPayment.AverageUsedPerPayment ?? 0)
+        };
+        
+    }
+    
+
+}
+
+<div class="my-5">
+    <div class="row">
+        <div class="col-lg my-auto h-auto">
+            <h1 class="display-3">Wallet Manager</h1>
+        </div>
+        <div class="col-lg">
+            <div class="ParaghrapBody">
+                <p class="ParaghrapText"><b>'Wallet Option'</b> would be
+                    The way you can spend money. Adding wallet option to match with 
+                    the way you spend money in daly life, So it make you will able to record expense correctly.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="my-4">
+    <div class="row justify-content-between">
+
+        <div class="col-md-5 col-lg-4">
+            <span class="LabelText">Select Payment Name</span>
+            <label class="text-danger">@unExspectedError</label>
+            <form id="selectorPayment" method="get">
+                <select asp-for="SelectedPaymentId" asp-items="Model.PaymentList" class="StyleWhite"></select>
+            </form>
+            @if (Model.SelectedPaymentId.HasValue) { 
+                <partial name="asset/_MainLabel" model="paymentType"></partial>
+                <partial name="asset/_MainLabel" model="paymentRevenue"></partial>
+                <partial name="asset/_MainLabel" model="paymentBalance"></partial>
+                <partial name="asset/_MainLabel" model="paymentExpense"></partial>
+            }
+        </div>
+
+        <div class="col-md-7 col-lg-6">
+            <div class="row justify-content-between">
+                <div class="col-md-4">
+                    <a asp-area="Creator" asp-page="PaymentCreator" class="BtnAction my-3 w-100">Create new</a>
+                    @if (Model.SelectedPaymentId.HasValue)
+                    {
+                        <a asp-area="Creator" asp-page="PaymentCreator" asp-route-id="@Model.SelectedPaymentId" class="BtnPrimary my-3 w-100">Edit</a>
+                        <button type="button" class="btn btn-info w-100 my-3" data-bs-toggle="modal" data-bs-target="#topupModal">Top up</button>
+                        <div class="my-2 w-100 h-auto text-center">
+                            <img width="120" height="120" src="@Model.SelectedPayment?.Symbol">
+                        </div>
+                    }
+
+                </div>
+                <div class="col-md-8">
+                    @if (Model.SelectedPaymentId.HasValue) { 
+                        <partial name="asset/_MainLabel" model="paymentTotalOrderCount" />
+                        <partial name="asset/_MainLabel" model="paymentRevenueCount" />
+                        <partial name="asset/_MainLabel" model="paymentExpenseCount"></partial>
+                        <partial name="asset/_MainLabel" model="paymentAverageUsed"></partial>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="topupModal" aria-labelledby="topupModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="topupModalLabel">Top up</h2>
+                <p class="text-muted">@Model.SelectedPayment?.PaymentName</p>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="form-group my-3">
+                        <label class="InfoText">Amount</label>
+                        <input type="number"  class="Text" name="amount" />
+                        <input type="hidden" asp-for="SelectedPaymentId" value="@Model.SelectedPaymentId" />
+                    </div>
+
+                    <button type="submit" asp-page-handler="TopUp" class="btn">Done</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+@section Scripts{
+
+    <partial name="_ValidationScriptsPartial"></partial>
+
+    <script>
+        $(function(){
+
+            $('#selectorPayment').change(function () {
+                $('#selectorPayment').submit();
+            });
+        });
+
+
+    </script>
+}

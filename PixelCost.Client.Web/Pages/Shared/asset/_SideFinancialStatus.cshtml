@@ -1,0 +1,16 @@
+@model FinancialStatus
+
+<div class="StatusBody">
+    <div class="d-flex justify-content-between">
+        <span class="flex-fill my-auto StatusLabel" style="color: #@(Model?.Status ?? "gray");">
+            @Model?.Label
+        </span>
+        <div class="flex-fill p-3" style="
+                color: black; background-color: #@(Model?.Status ?? "gray")44;
+                border-left: 4px solid #@(Model?.Status);">
+            <span class="StatusValue" >
+                @Model?.Value
+            </span>
+        </div>
+    </div>
+</div>

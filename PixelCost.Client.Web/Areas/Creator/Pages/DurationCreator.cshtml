@@ -1,0 +1,54 @@
+﻿@page
+@model DurationCreatorModel
+@{
+}
+
+<div class="row mt-5">
+    <div class="col-lg my-auto">
+        <h1 class="MainTitle d-block text-center mb-4">Create new Duration</h1>
+    </div>
+    <div class="col-lg">
+        <div class="ParaghrapBody">
+            <p class="ParaghrapText">'<b>Duration</b>' refer to a span time which you 
+                need to manage money with.
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<div class="row mt-4">
+    <div class="col-lg order-2 order-lg-1"> 
+        <div class="d-flex flex-column justify-content-evenly">
+
+            <form method="post">
+                <span asp-validation-for="duration.Name" class="ErrorValidation"></span>
+                <input asp-for="duration.Name" class="Text mb-3" placeholder="Duration's name"/>
+                
+                <span asp-validation-for="duration.Cost" class="ErrorValidation"></span>
+                <input asp-for="duration.Cost" class="Text mb-3" placeholder="Duration's cost"/>
+                
+                <span asp-validation-for="duration.StartingDate" class="ErrorValidation"></span>
+                <input asp-for="duration.StartingDate" class="Date mb-3" placeholder="Starting date"/>
+                
+                <span asp-validation-for="duration.EndingDate" class="ErrorValidation"></span>
+                <input asp-for="duration.EndingDate" class="Date mb-3" placeholder="Ending date"/>
+                
+                <button type="submit" class="BtnPrimary w-100">Done</button>
+            </form>
+            
+        </div>
+    </div>
+    <div class="col-lg order-1 order-lg-2">
+        <div class="ParaghrapBody mb-4">
+            <p class="ParaghrapText">For example you want to manage money within a month, So that the month
+                represent a duration.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"></partial>
+}

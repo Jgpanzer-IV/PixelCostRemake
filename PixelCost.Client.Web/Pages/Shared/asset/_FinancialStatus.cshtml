@@ -1,0 +1,10 @@
+@model FinancialStatus
+
+
+<div class="StatusBody">
+    <span class="StatusLabel" style="color: #@(Model?.Status ?? "gray");">@Model?.Label</span>
+    <div style="padding:0.6rem; background-color: #@(Model?.Status ?? "gray")44; border-top-style: solid; border-top-color:#@(Model?.Status ?? "gray"); border-top-width: 4px;">
+        <span class="StatusValue">@Model?.Value</span>
+    </div>
+</div>
+
