@@ -22,7 +22,7 @@ builder.Services.AddAuthentication(option =>
     .AddOpenIdConnect("oidc", config => {
 
         // Set the remote authentication server.
-        config.Authority = builder.Configuration.GetSection("UrlServers")["Identity"]; // Specify authority to make sure that the token will come from the authentication server
+        config.Authority = builder.Configuration.GetSection("UrlServers")["identityServer"]; // Specify authority to make sure that the token will come from the authentication server
         config.AccessDeniedPath = "/Auth/AccessDenied"; // The route template used when cancel signing-in returned from authentication server.
         config.SignedOutRedirectUri = "/Index"; // The route template used when signout from authentication server.
 
