@@ -17,7 +17,7 @@ internal static class HostingExtensions
         builder.Services.AddRazorPages();
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("ConfigurationResource")));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityResource")));
 
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -113,7 +113,7 @@ internal static class HostingExtensions
             app.UseDeveloperExceptionPage();
         }
 
-        InitializeDatabase(app);
+        //InitializeDatabase(app);
 
         app.UseStaticFiles();
         app.UseRouting();

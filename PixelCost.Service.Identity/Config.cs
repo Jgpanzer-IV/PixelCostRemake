@@ -10,7 +10,7 @@ public static class Config
         {
             new IdentityResources.OpenId(),
             new IdentityResources.Profile(),
-            new IdentityResource("role",new [] {"role"})
+            new IdentityResource("role",new [] {"identity_role"})
         };
 
     public static IEnumerable<ApiScope> ApiScopes =>
@@ -74,6 +74,7 @@ public static class Config
                 AllowedScopes = {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
+                    "role",
                     "create", "retrieve", "update", "delete"
                 }
             },
@@ -94,6 +95,7 @@ public static class Config
                 AllowedScopes = {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
+                    "role",
                     "admin"
                 }
             }
