@@ -22,8 +22,8 @@ builder.Services.AddScoped<IWalletRepository, WalletRepository>();
 
 IMapper MapperConfiguration = new MapperConfiguration(express =>
 {
-    express.CreateMap<Wallet, WalletDTO>();
-    express.CreateMap<PaymentMethod, PaymentMethodDTO>();
+    express.CreateMap<Wallet, WalletDTO>().ReverseMap();
+    express.CreateMap<PaymentMethod, PaymentMethodDTO>().ReverseMap();
 
 }).CreateMapper();
 builder.Services.AddSingleton(MapperConfiguration); 
