@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.OpenApi.Models;
 using PixelCost.Service.WalletAPI.Database;
 using PixelCost.Service.WalletAPI.Model.DTOs;
 using PixelCost.Service.WalletAPI.Model.Entities;
@@ -13,7 +14,26 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(option => {
+    option.SwaggerDoc("v1", new OpenApiInfo {
+        Version = "v1",
+        Title = "Wallet Api",
+        Description = "This api responsible to serve the 'wallet' and its releated infomation that using 'PaymentMethod' entity.",
+        Contact = new OpenApiContact
+        {
+            Name = "Karnchai Sakkarnjana",
+            Email = "Sakkarnjana@outlook.com",
+            Url = new Uri(builder.Configuration["AdminContect"])
+        },
+        License = new OpenApiLicense
+        {
+            Name = "Pixel License",
+            Url = new Uri(builder.Configuration["ClientUrl:PixelLicense"].ToString())
+        },
+        TermsOfService = new Uri(builder.Configuration["ClientUrl:TermOfService"].ToString())
+    });
+    
+});
 
 
 builder.Services.AddSqlServer<ApplicationDbContext>(builder.Configuration.GetConnectionString("SqlServer"));
