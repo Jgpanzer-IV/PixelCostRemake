@@ -1,4 +1,4 @@
-﻿namespace PixelCost.Service.WalletAPI.Model.DTOModel
+﻿namespace PixelCost.Service.WalletAPI.Model.DTOs
 {
     public class PaymentMethodDTO
     {

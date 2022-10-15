@@ -1,5 +1,5 @@
 ﻿
-namespace PixelCost.Service.WalletAPI.Model.EntiyModel
+namespace PixelCost.Service.WalletAPI.Model.Entities
 {
     public class Wallet
     {
