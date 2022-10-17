@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PixelCost.Service.RecordingAPI.Database;
+using PixelCost.Service.RecordingAPI.Services.Implementations;
+using PixelCost.Service.RecordingAPI.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,12 +15,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ApplicationDbContext>(config => config.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 
-
-
-
-
-
-
+builder.Services.AddScoped<IExpenseRepository, ExpenseRepository>();
+builder.Services.AddScoped<IPrimaryExpenseRepository, PrimaryExpenseRepository>();
+builder.Services.AddScoped<IRevenueRepository, RevenueRepository>();
 
 
 
