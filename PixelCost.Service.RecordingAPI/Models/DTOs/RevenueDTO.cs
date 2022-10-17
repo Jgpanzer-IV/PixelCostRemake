@@ -10,7 +10,7 @@
         public string UserId { get; set; } = string.Empty;
         public long DurationId { get; set; }
         public long SubDurationId { get; set; }
-        public long CategoryId { get; set; }
+ 
 
     }
 }
