@@ -25,7 +25,5 @@ namespace PixelCost.Service.EventAPI.Models.DTOs
         public decimal? SumCategoryBalance { get; set; }
         public bool? IsAchived { get; set; }
 
-        public IList<CategoryDTO>? Categories { get; set; }
-        public IList<RevenueDTO>? Revenues { get; set; }
     }
 }

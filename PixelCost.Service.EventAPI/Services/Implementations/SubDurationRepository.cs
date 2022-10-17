@@ -23,6 +23,9 @@ namespace PixelCost.Service.EventAPI.Services.Implementations
         public Task<SubDurationDTO?> CreateAsync(SubDurationDTO subDurationDTO)
         {
             return Task.Run(() => {
+                if (_dbContext.SubDurations == null)
+                    return null;
+
                 SubDuration subDuration = _mapper.Map<SubDuration>(subDurationDTO);
                 SubDuration created = _dbContext.SubDurations.Add(subDuration).Entity;
                 int result = _dbContext.SaveChanges();
