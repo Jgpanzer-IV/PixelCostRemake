@@ -1,5 +1,10 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PixelCost.Service.EventAPI.Database;
+using PixelCost.Service.EventAPI.Models.DTOs;
+using PixelCost.Service.EventAPI.Models.Entities;
+using PixelCost.Service.EventAPI.Services.Interfaces;
+using PixelCost.Service.EventAPI.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +18,16 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ApplicationDbContext>(config => config.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 
+builder.Services.AddScoped<ISubDurationRepository, SubDurationRepository>();
 
+IMapper MapperConfiguration = new MapperConfiguration(configExpress =>
+{
+    configExpress.CreateMap<SubDuration, SubDurationDTO>().ReverseMap();
+    configExpress.CreateMap<Revenue, RevenueDTO>().ReverseMap();
+    configExpress.CreateMap<Category, CategoryDTO>().ReverseMap();
+}).CreateMapper();
+builder.Services.AddSingleton(MapperConfiguration);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
 
