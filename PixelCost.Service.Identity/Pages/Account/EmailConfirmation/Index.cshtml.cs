@@ -40,7 +40,7 @@ namespace PixelCost.Service.Identity.Pages.EmailConfirmation
 
                 if (result.Succeeded)
                 {
-                    return RedirectPermanent(_configuration.GetSection("UriServer")["Client.Web"]+"/Menu/MainMenu");
+                    return RedirectPermanent(_configuration.GetSection("UriServer")["Interactive.Client"]+"/Menu/MainMenu");
                 }
                 else 
                 {
@@ -69,18 +69,18 @@ namespace PixelCost.Service.Identity.Pages.EmailConfirmation
 
                 // Send confirmation link to the user's email.
                 var mailMessage = new MailMessage(
-                    _configuration["SMTP:username"],
+                    _configuration["EmailBroker:UserName"],
                     email,
                     "Please confirm your email againt PixelSchme services",
-                    $"Thank you for using our services, Please click the confirmation link here to complete sign up\n{urlConfirmation}");
+                    $"Thank you for using our services, Please click the confirmation link here to complete sign up \n{urlConfirmation}");
 
-                using (var emailClient = new SmtpClient(_configuration["SMTP:server"], int.Parse(_configuration["SMTP:port"].ToString())))
+                using (var emailClient = new SmtpClient(_configuration["EmailBroker:Url"], int.Parse(_configuration["EmailBroker:Port"].ToString())))
                 {
 
                     // Autorize sender using network credential in SMTP server
                     emailClient.Credentials = new NetworkCredential(
-                        _configuration["SMTP:username"],
-                        _configuration["SMTP:password"]);
+                        _configuration["EmailBroker:UserName"],
+                        _configuration["EmailBroker:Password"]);
 
                     await emailClient.SendMailAsync(mailMessage);
 

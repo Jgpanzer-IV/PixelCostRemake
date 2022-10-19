@@ -1,3 +1,12 @@
+* {
+    font-family : QuickSand;
+}
+
+@font-face{
+    font-family : QuickSand;
+    src : url("../fonts/Quicksand.ttf");
+}
+
 html {
   font-size: 14px;
 }

@@ -12,8 +12,8 @@ using PixelCost.Service.Identity.Data;
 namespace PixelCost.Service.Identity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221014070757_InitialCustomIdentity")]
-    partial class InitialCustomIdentity
+    [Migration("20221018082302_InitialDbContextIdentity")]
+    partial class InitialDbContextIdentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -198,9 +198,6 @@ namespace PixelCost.Service.Identity.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");

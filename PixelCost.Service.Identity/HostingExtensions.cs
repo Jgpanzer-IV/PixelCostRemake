@@ -47,7 +47,8 @@ internal static class HostingExtensions
                     builder.Configuration.GetConnectionString("ConfigurationResource"), 
                     sql => sql.MigrationsAssembly(migrationAssembly)
                 );
-            });
+            })
+            .AddAspNetIdentity<ApplicationUser>();
         
 
         builder.Services.AddAuthentication()

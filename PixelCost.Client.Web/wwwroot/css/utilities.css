@@ -1,0 +1,382 @@
+*{
+    font-family: Quicksand;
+}
+
+
+/*--------------- Container ---------------*/
+
+div.MainBody{
+    padding: 0%;
+    margin: 0%;
+    background-color: #444444;
+}
+  
+img.Profile{
+    border-radius: 6px;
+    display: inline-block;
+    box-shadow: 1px 1px 3px #222222;
+    max-width: 300px;
+    max-height: 320px;
+    width: auto;
+    height: auto;
+    min-width: 150px;
+    min-height: 160px;
+}
+
+div.ParaghrapBody{
+    padding: 2rem;
+    background-color: lightgray;
+    border-radius: 4px;
+    box-shadow: 2px 2px 3px #00000075;
+}
+
+div.ProgressPipContainer{
+    padding: 0%;
+    margin: 0%;
+    height: 10px;
+    width: 100%;
+    display: block;
+    background-color: gainsboro;
+}
+
+div.ProgressPipBody{
+    padding: 0%;
+    margin: 0%;
+    height: 100%;
+    display: block;
+    background-color: red;
+}
+
+.ShadowContainer{
+    box-shadow: 2px 2px 2px #00000038;
+}
+
+/* --------------- Main Label ------------- */
+ 
+div.MainLabel{
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    background-color: #333333;
+    padding: 0.8rem 3.0rem 0.8rem 3.0rem;
+    margin: 1rem 0rem 1rem 0rem;
+}
+
+span.MainLabelText{
+    font-size: 26px;
+    font-weight: 500;
+    text-align: start;
+    display: block;
+    color: aliceblue;
+}
+
+span.MainLabelValue{
+    font-size: 18px;
+    color: aliceblue;
+    font-weight: 800;
+    text-align: end;
+    display: block;
+}
+
+ 
+/*------------------ Text Description  -------------------------*/
+.MainTitle{
+    font-family: Quicksand;
+    font-size: 48px;
+    font-weight: 600;
+}
+  
+span.SubTopic{
+    display: block;
+    padding: 0px;
+    font-size: 32px;
+    font-family: Quicksand;
+    color: #222222;
+    font-weight: 500;
+}
+  
+.LabelText{
+    font-family: Quicksand;
+    font-size: 16px;
+    font-weight: 200;
+    text-decoration: none;
+    color: #222222;
+}
+
+span.PlaceHolder{
+    font-size: 12px;
+    font-weight: 600;
+    color: gray;
+}
+
+
+
+p.ParaghrapText{
+    font-size: 22px;
+    line-height: 2.4rem;
+    font-weight: 500;
+}
+
+
+  
+/*-------------- Button ----------------------*/
+.BtnMainMenu{
+    padding: 1.2rem;
+    margin: 0.5rem 0rem 0.5rem 0rem;
+    background-color: #333333;
+    color: aliceblue;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: large;
+    font-family: Quicksand;
+    border-radius: 2px;
+    display: inline-block;
+}
+
+.BtnNormal, .BtnPrimary,
+.BtnAction, .BtnLink{
+    box-shadow: 2px 2px 3px #00000096;
+}
+
+.BtnNormal:hover, .BtnPrimary:hover{
+    box-shadow: 3px 3px 3px #00000096;
+    transition: all;
+    transform: scale(1.1,1.1);
+}
+  
+.BtnPrimary, .BtnLink, .BtnAction {
+    font-family: Quicksand;
+    font-size: 16px;
+    font-weight: 300;
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 2px;
+    border: none;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    text-align: center;
+}
+
+.BtnPrimary{
+    background-color: #e30000;
+    color: aliceblue;
+}
+
+.BtnLink{
+    background-color: darkcyan;
+    color: aliceblue;
+}
+
+.BtnAction{
+    background-color: green;
+    color: aliceblue;
+}
+
+.BtnNormal{
+    font-family: Quicksand;
+    font-size: 16px;
+    font-weight: 300;
+    text-decoration: none;
+    color: aliceblue;
+    padding: 0.5rem;
+    border-radius: 2px;
+    border: none;
+    background-color: #888888;
+    display: inline-block;
+    width: auto;
+    height: auto;
+}
+  
+.BtnMenu{
+    border-color: #333333;
+    border-top: none;
+    border-bottom: none;
+
+}
+
+/*--------------- Expense List*/
+  
+.ExpenseList{
+    height: auto;
+    width: 100%;
+    background-color: #eeeeee;
+    font-size: 16px;
+    font-family: Quicksand;
+    margin: 1rem 0rem 1rem 0rem;
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 2px 2px 3px #0000005e;
+}
+  
+.ExpenseList:hover{
+    transition: 1.2s;
+    background-color: #ffa4a4;
+    color: aliceblue;
+}
+
+span.LabelList{
+    display: block;
+    font-size: 24px;
+    font-weight: 500;
+
+}
+
+span.ValueList{
+    display: block;
+    font-size: 20px;
+    color: red;
+    font-weight: 500;
+}
+
+.SizeMenu{
+    width: 120px;
+    height: 50px;
+}
+  
+/*------------------- Progress List Item -----------------*/
+div.ProgressItemBody{
+    background-color: rgb(232, 232, 232);
+    box-shadow: 2px 2px 2px #00000038;
+    border-radius: 3px;
+    padding: 1rem 1rem;
+    margin: 0.8rem 0rem;
+    height: auto;
+    width: 100%;
+}
+
+span.ProgressMainText{
+    font-size: 18px;
+    margin-right: 1rem;
+    color: #222222;
+}
+
+span.ProgressDescript{
+    font-size: 14px;
+    display: inline-block;
+    color: #222222 !important;
+}
+
+span.ProgressInfo{
+    font-size: 16px;
+    font-weight: 600;
+    display: inline-block;
+    text-align: end;
+    color: red;
+}
+
+a.LinkItem{
+    text-decoration: none;
+}
+
+/*------------------------ List Item ------------------*/
+
+div.ItemBody{
+    height: auto;
+    width: 100%;
+    padding: 1.2rem;
+    border-radius: 3px;
+}
+
+/*----------------------- Text Item ------------------*/
+span.ItemName{
+    display: inline-block;
+    text-align: end;
+    font-size: 20px;
+    font-weight: 800;
+    color: #222222;
+}
+
+span.ItemValue{
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 600;
+    color: green;
+}
+
+
+/*----------------------- Status Frame ---------------------- */
+
+div.StatusBody{
+    width: 100%;
+    height: auto;
+
+}
+
+span.StatusLabel{
+    display: block;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    height: 100%;
+}
+
+span.StatusValue{
+    display: block;
+    text-align: center;
+    height: 100%;
+    font-size: 14px;
+    font-weight: 800;
+    color: #222222;
+}
+
+.StatusSize{
+    width: 40%;
+    height: auto;
+    margin: 0rem 0.6rem;
+}
+
+
+/*--------------- FinancialSummarizing -----*/
+span.SumFinancialTitle{
+    font-size: 26px;
+    font-weight: 400;
+    text-align: center;
+    display: block;
+    padding: 0.4rem 0rem;
+
+}
+
+span.SumFinancialText{
+    font-size: 16px;
+    font-weight: 800;
+    padding: 0.5rem 0rem;
+    display: block;
+}
+
+span.SumFinancialListText{
+    font-size: 12px;
+    font-weight: 600;
+    padding: 0.2rem 0rem;
+}
+
+span.SumFinancialListTitle{
+    font-size: 16px;
+    padding: 0.6rem 0rem;
+    font-weight: 500;
+    display: block;
+}
+
+div.SumFinancialMainLabelBody{
+    width: 100%;
+    border-top: solid;
+    border-top-width: 4px;
+}
+
+/*------------------- Sector Title -----------------------------*/
+
+div.SectorTitle {
+    background-color: #444444;
+    width : 100%;
+    margin: 80px 0px 30px 0px;
+}
+
+p.SectorText {
+    text-align : center;
+    color: aliceblue;
+    font-size : 28px;
+}
+
+

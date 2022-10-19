@@ -39,7 +39,7 @@ namespace PixelCost.Identity.Pages.Register
         { }
 
         public RedirectResult OnPostLogin() {
-            return RedirectPermanent(_configuration["UriServer:Client.Web"]+"/Menu/MainMenu");
+            return RedirectPermanent(_configuration["UriServer:Interactive.Client"] +"/Menu/MainMenu");
         }
 
         public async Task<IActionResult> OnPost()
@@ -69,11 +69,13 @@ namespace PixelCost.Identity.Pages.Register
                 };
 
                 string content = JsonSerializer.Serialize(walletDTO);
+
                 StringContent stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
                 HttpClient httpClient = _httpClientFactory.CreateClient();
 
-                HttpResponseMessage response = await httpClient.PostAsync(_configuration["UriServer:WalletAPI"], stringContent);
+                HttpResponseMessage response = await httpClient.PostAsync(_configuration["UriServer:Service.WalletAPI"] + _configuration["RelativePath:WalletEndpoint"], stringContent);
+
                 if (response.IsSuccessStatusCode)
                 {
                     return RedirectToPagePermanent("/Account/EmailConfirmation/Index", pageHandler: "Send", new { email = newUser.Email });
@@ -88,7 +90,6 @@ namespace PixelCost.Identity.Pages.Register
                     ViewData["UnExspectedProblem"] = "The server cannot create the posted entity, Please contect admin.";
                     return Page();
                 }
-
             }
             else 
             {
