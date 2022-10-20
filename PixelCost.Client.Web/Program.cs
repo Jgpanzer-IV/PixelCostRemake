@@ -69,6 +69,11 @@ builder.Services.AddHttpClient(Constant.walletUserApi, config => {
     config.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 });
 
+builder.Services.AddHttpClient(Constant.paymentMethodApi, config => {
+    config.BaseAddress = new Uri(builder.Configuration["UriServers:paymentAPI"]);
+    config.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+});
+
 builder.Services.AddScoped<ICommunicationServices, CommunicationServices>();
 
 
