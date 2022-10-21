@@ -11,9 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{D9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PixelCost.Service.Identity", "PixelCost.Service.Identity\PixelCost.Service.Identity.csproj", "{3758418B-01D5-4AEC-955D-51643D2F019C}"
 EndProject
+<<<<<<< HEAD
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PixelCost.Service.WalletAPI", "PixelCost.Service.WalletAPI\PixelCost.Service.WalletAPI.csproj", "{F2790973-789D-42EB-8A27-34D6759CB8B8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PixelCost.Service.PaymentAPI", "PixelCost.Service.PaymentAPI\PixelCost.Service.PaymentAPI.csproj", "{F3955F99-783A-42AF-A977-1EC9CF58E187}"
+=======
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelCost.Service.DurationAPI", "PixelCost.Service.DurationAPI\PixelCost.Service.DurationAPI.csproj", "{C2D1230A-406D-4ACE-9370-DE1A4A28C7DB}"
+>>>>>>> service.durationAPI
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +33,7 @@ Global
 		{3758418B-01D5-4AEC-955D-51643D2F019C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3758418B-01D5-4AEC-955D-51643D2F019C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3758418B-01D5-4AEC-955D-51643D2F019C}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
 		{F2790973-789D-42EB-8A27-34D6759CB8B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F2790973-789D-42EB-8A27-34D6759CB8B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2790973-789D-42EB-8A27-34D6759CB8B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -37,6 +42,12 @@ Global
 		{F3955F99-783A-42AF-A977-1EC9CF58E187}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3955F99-783A-42AF-A977-1EC9CF58E187}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3955F99-783A-42AF-A977-1EC9CF58E187}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+		{C2D1230A-406D-4ACE-9370-DE1A4A28C7DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2D1230A-406D-4ACE-9370-DE1A4A28C7DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2D1230A-406D-4ACE-9370-DE1A4A28C7DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2D1230A-406D-4ACE-9370-DE1A4A28C7DB}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> service.durationAPI
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,8 +55,12 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{ED573CD1-FC3B-43D6-8F08-D6C91BA1B76A} = {AC8AE446-0D36-4A13-99DE-D205BFF0B2E0}
 		{3758418B-01D5-4AEC-955D-51643D2F019C} = {D956E8EE-EAE5-4E45-BD0B-BAEBD1D5ED74}
+<<<<<<< HEAD
 		{F2790973-789D-42EB-8A27-34D6759CB8B8} = {D956E8EE-EAE5-4E45-BD0B-BAEBD1D5ED74}
 		{F3955F99-783A-42AF-A977-1EC9CF58E187} = {D956E8EE-EAE5-4E45-BD0B-BAEBD1D5ED74}
+=======
+		{C2D1230A-406D-4ACE-9370-DE1A4A28C7DB} = {D956E8EE-EAE5-4E45-BD0B-BAEBD1D5ED74}
+>>>>>>> service.durationAPI
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7B7F188-43A3-4A8D-93E2-C5F558250141}
