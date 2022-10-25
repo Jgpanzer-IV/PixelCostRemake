@@ -74,6 +74,11 @@ builder.Services.AddHttpClient(Constant.paymentMethodApi, config => {
     config.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 });
 
+builder.Services.AddHttpClient(Constant.durationApi, config => {
+    config.BaseAddress = new Uri(builder.Configuration["UriServers:durationAPI"]);
+    config.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+});
+
 builder.Services.AddScoped<ICommunicationServices, CommunicationServices>();
 
 

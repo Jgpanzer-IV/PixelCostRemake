@@ -30,9 +30,9 @@ namespace PixelCost.Client.Web.Models.content
                 case 'e':
                     Title = "Expense";
                     MainLabel01 = "Total Expense";
-                    MainValue01 = durationDTO.Expense.ToString("C");
+                    MainValue01 = durationDTO.Expense?.ToString("C") ?? "0";
                     MainLabel02 = "Average per day";
-                    MainValue02 = durationDTO.AverageExpense.ToString("C");
+                    MainValue02 = (durationDTO.Expense / durationDTO.ExpenseCount)?.ToString("C") ?? "0";
                     SumLabel = "Total Sub duration expense";
                     SumValue = durationDTO.SubDurations?.Sum(e => e.Expense).ToString() ?? string.Empty;
                     color = "e30000";
@@ -47,9 +47,9 @@ namespace PixelCost.Client.Web.Models.content
                 case 'b':
                     Title = "Balance";
                     MainLabel01 = "Total Balance";
-                    MainValue01 = durationDTO.Balance.ToString("C");
+                    MainValue01 = durationDTO.Balance?.ToString("C") ?? "0";
                     MainLabel02 = "Untouched";
-                    MainValue02 = durationDTO.Untouched.ToString("C");
+                    MainValue02 = durationDTO.UsableMoney?.ToString("C") ?? "0";
                     SumLabel = "Total Sub duration balance";
                     SumValue = durationDTO.SubDurations?.Sum(e => e.Balance).ToString() ?? string.Empty;
                     color = "88cc00";

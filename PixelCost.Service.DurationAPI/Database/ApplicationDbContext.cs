@@ -12,6 +12,7 @@ namespace PixelCost.Service.DurationAPI.Database
         public DbSet<Duration>? Durations { get; set; }
         public DbSet<SubDuration>? SubDurations { get; set; }
         public DbSet<PrimaryExpense>? PrimaryExpenses { get; set; }
+        public DbSet<Expense>? Expenses { get; set; }
         public DbSet<Revenue>? Revenues { get; set; }
         public DbSet<Category>? Categories { get; set; }
 
@@ -41,7 +42,7 @@ namespace PixelCost.Service.DurationAPI.Database
                 buildAction.Property(e => e.Balance).HasColumnType("money").HasConversion<double>();
                 buildAction.Property(e => e.SumSubDurationBalance).HasColumnType("money").HasConversion<double>();
                 buildAction.Property(e => e.SumCategoryBalance).HasColumnType("money").HasConversion<double>();
-                buildAction.Property(e => e.IsActive).HasDefaultValue(value: true);
+                buildAction.Property(e => e.IsActive).HasDefaultValue(value: true).IsRequired() ;
 
                 buildAction.HasMany(e => e.SubDurations).WithOne(e => e.Duration).HasForeignKey(e => e.DurationId).IsRequired();
                 buildAction.HasMany(e => e.Revenues).WithOne(e => e.Duration).HasForeignKey(e => e.DurationId).IsRequired();
@@ -69,7 +70,7 @@ namespace PixelCost.Service.DurationAPI.Database
                 buildAction.Property(e => e.ExpenseCount);
                 buildAction.Property(e => e.Balance).HasColumnType("money").HasConversion<double>();
                 buildAction.Property(e => e.SumCategoryBalance).HasColumnType("money").HasConversion<double>();
-                buildAction.Property(e => e.IsAchived).HasDefaultValue(true);
+                buildAction.Property(e => e.IsAchived).HasDefaultValue(value: true).IsRequired();
 
                 buildAction.HasOne(e => e.Duration).WithMany(e => e.SubDurations).HasForeignKey(e => e.DurationId).IsRequired();
             });
@@ -87,6 +88,7 @@ namespace PixelCost.Service.DurationAPI.Database
                 buildAction.Property(e => e.IsAchived).HasDefaultValue(true);
 
                 buildAction.HasOne(e=>e.Duration).WithMany(e=>e.Categories).HasForeignKey(e=>e.DurationId).IsRequired();
+                buildAction.HasMany(e => e.Expenses).WithOne(e => e.Category).HasForeignKey(e => e.CategoryId).IsRequired();
             });
             
             modelBuilder.Entity<PrimaryExpense>(buildAction => {
@@ -98,6 +100,18 @@ namespace PixelCost.Service.DurationAPI.Database
                 buildAction.Property(e => e.OrderingPrice).HasColumnType("money").HasConversion<double>().IsRequired();
 
                 buildAction.HasOne(e=>e.Duration).WithMany(e=>e.PrimaryExpenses).HasForeignKey(e => e.DurationId).IsRequired();
+            });
+
+            modelBuilder.Entity<Expense>(buildAction =>
+            {
+                buildAction.ToTable("Expenses");
+                buildAction.HasKey(e => e.Id);
+                buildAction.Property(e => e.OrderingName).HasMaxLength(64).IsRequired();
+                buildAction.Property(e => e.OrderingPrice).HasColumnType("money").HasConversion<double>().IsRequired();
+                buildAction.Property(e => e.OrderingDate).IsRequired();
+
+                buildAction.HasOne(e => e.Category).WithMany(e => e.Expenses).HasForeignKey(e => e.CategoryId).IsRequired();
+
             });
 
             modelBuilder.Entity<Revenue>(buildAction => {

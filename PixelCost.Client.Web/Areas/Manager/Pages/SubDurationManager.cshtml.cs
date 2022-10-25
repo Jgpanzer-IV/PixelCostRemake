@@ -11,7 +11,7 @@ namespace PixelCost.Client.Web.Areas.Pages
         public SubDuration SubDuration {get;set;} = new();
 
         [BindProperty]
-        [Display(Name = "Select Duration")]
+        [Display(Name = "Select DurationForm")]
         public string? DurationID {get;set;}
 
         

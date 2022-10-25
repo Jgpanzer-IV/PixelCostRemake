@@ -3,7 +3,7 @@
 @{
     // Convert Retrieved item to content item
     
-    // Duration content container
+    // DurationForm content container
     List<ListItem>? primaryListItem = null;
     FullProgressBar? durationProgress = null;
     FinancialStatus? costDuration = null;
@@ -34,7 +34,7 @@
         
         // Create content for selected duration if  
         durationProgress = new(Model.SelectedDuration);
-        costDuration = new("Cost",Model.SelectedDuration.Cost.ToString(),0);
+        costDuration = new("Cost",Model.SelectedDuration.InitialCost.ToString(),0);
         expenseSummarizing = new(Model.SelectedDuration,'e');
         balanceSummarizing = new(Model.SelectedDuration,'b');
         primaryListItem = new();
@@ -66,7 +66,7 @@
         );
 
         // 2.Store how many time repeat in each label
-        // Duration = count of paymentID in Primary and Expense order
+        // DurationForm = count of paymentID in Primary and Expense order
         PaymentValueDuration = new();
         int getterRepeat = 0;
         PaymentLabel?.ForEach(e=>{

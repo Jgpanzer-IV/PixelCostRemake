@@ -18,10 +18,10 @@ namespace PixelCost.Client.Web.Models.content
 
         public FinancialSet(DurationDTO durationDTO)
         {
-            Cost = new FinancialStatus("Cost",durationDTO.Cost.ToString(),0);
+            Cost = new FinancialStatus("Cost",durationDTO.InitialCost.ToString(),0);
             Balance = new FinancialStatus("Balance",durationDTO.Balance.ToString(),1);
             Expense = new FinancialStatus("Expense",durationDTO.Expense.ToString(),2);
-            AverageUsed = new FinancialStatus("Average used per day",durationDTO.AverageExpense.ToString(),3);
+            AverageUsed = new FinancialStatus("Average used per day",(durationDTO.Expense / durationDTO.ExpenseCount).ToString(),3);
         }
 
         public FinancialSet(SubDurationDTO subDurationDTO){

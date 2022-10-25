@@ -22,6 +22,6 @@
         public decimal? Balance { get; set; }
         public decimal? SumCategoryBalance { get; set; }
         public decimal? SumSubDurationBalance { get; set; }
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
     }
 }

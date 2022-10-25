@@ -8,22 +8,24 @@ namespace PixelCost.Client.Web.Models.content
 {
     public class ProgressItem
     {
+        public long? Id { get; set; }
         public string MainText {get;set;} = string.Empty;
         public string Description {get;set;} = string.Empty;
         public string InformationText {get;set;} = string.Empty;
         public string ItemName {get;set;} = string.Empty;
         public string Value {get;set;} = string.Empty;
-        public byte Progress {get;set;}
+        public float? Progress {get;set;}
 
         public ProgressItem()
-        {}
+        { }
 
         public ProgressItem(DurationDTO durationDTO){
+            Id = durationDTO.Id;
             ItemName = durationDTO.Name;
-            MainText = durationDTO.Progress.ToString();
-            Value = (durationDTO.IsActive)? "Edit":"Removed";
+            MainText = "Progress : " + durationDTO.Progress.ToString() + " %";
+            Value = "Balance " + durationDTO.Balance?.ToString("C");
             Progress = durationDTO.Progress;
-            InformationText = "Remain "+ durationDTO.RemainDate+ "Day will reach the end.";
+            InformationText = (durationDTO.RemainingDays > durationDTO.TotalDays)? "Still not reache the active duration.":"Remain "+ durationDTO.RemainingDays+ " Day will reach the end.";
         }   
 
         public ProgressItem(SubDurationDTO subDurationDTO){

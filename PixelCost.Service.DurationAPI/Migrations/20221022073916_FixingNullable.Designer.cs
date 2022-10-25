@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PixelCost.Service.DurationAPI.Database;
 
@@ -11,9 +12,10 @@ using PixelCost.Service.DurationAPI.Database;
 namespace PixelCost.Service.DurationAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221022073916_FixingNullable")]
+    partial class FixingNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,35 +140,6 @@ namespace PixelCost.Service.DurationAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Durations", (string)null);
-                });
-
-            modelBuilder.Entity("PixelCost.Service.DurationAPI.Models.Entities.Expense", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<long>("CategoryId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("OrderingDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("OrderingName")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<decimal>("OrderingPrice")
-                        .HasColumnType("money");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("Expenses", (string)null);
                 });
 
             modelBuilder.Entity("PixelCost.Service.DurationAPI.Models.Entities.PrimaryExpense", b =>
@@ -310,17 +283,6 @@ namespace PixelCost.Service.DurationAPI.Migrations
                     b.Navigation("Duration");
                 });
 
-            modelBuilder.Entity("PixelCost.Service.DurationAPI.Models.Entities.Expense", b =>
-                {
-                    b.HasOne("PixelCost.Service.DurationAPI.Models.Entities.Category", "Category")
-                        .WithMany("Expenses")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("PixelCost.Service.DurationAPI.Models.Entities.PrimaryExpense", b =>
                 {
                     b.HasOne("PixelCost.Service.DurationAPI.Models.Entities.Duration", "Duration")
@@ -352,11 +314,6 @@ namespace PixelCost.Service.DurationAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Duration");
-                });
-
-            modelBuilder.Entity("PixelCost.Service.DurationAPI.Models.Entities.Category", b =>
-                {
-                    b.Navigation("Expenses");
                 });
 
             modelBuilder.Entity("PixelCost.Service.DurationAPI.Models.Entities.Duration", b =>

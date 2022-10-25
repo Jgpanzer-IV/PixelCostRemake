@@ -16,7 +16,7 @@ namespace PixelCost.Client.Web.Models.content
         public string? Label03 {get;set;}
         public string? Description {get;set;}
         public string? Information {get;set;}
-        public byte Progress {get;set;}
+        public float? Progress {get;set;}
 
 
         public FullProgressBar()
@@ -30,7 +30,7 @@ namespace PixelCost.Client.Web.Models.content
             Label01 = "Starting Date";
             Label02 = "Current";
             Label03 = "Endign Date";
-            Description = "Remain "+ durationDTO.RemainDate +" will reach the end.";
+            Description = "Remain "+ durationDTO.RemainingDays +" will reach the end.";
             Information = "Progress " + durationDTO.Progress + " %";
             Progress = durationDTO.Progress;
         }

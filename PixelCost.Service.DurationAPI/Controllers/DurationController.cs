@@ -39,7 +39,7 @@ namespace PixelCost.Service.DurationAPI.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(typeof(ProblemDetails),400)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> CreateAsync(DurationDTO durationDTO) {
+        public async Task<IActionResult> CreateAsync([FromBody] DurationDTO durationDTO) {
 
             if (durationDTO == null)
                 return BadRequest(new ProblemDetails { 
@@ -63,25 +63,25 @@ namespace PixelCost.Service.DurationAPI.Controllers
         }
 
 
-        [HttpPatch]
-        [ProducesResponseType(204)]
+        [HttpPatch("{id:long}")]
+        [ProducesResponseType(typeof(DurationDTO),202)]
         [ProducesResponseType(404)]
         [ProducesResponseType(typeof(ProblemDetails),400)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateAsync(DurationDTO durationDTO) {
+        public async Task<IActionResult> UpdateAsync([FromBody] DurationDTO durationDTO, long id) {
 
             if (durationDTO == null)
                 return BadRequest();
 
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || id != durationDTO.Id)
                 return BadRequest();
 
-            if(await _durationRepository.RetrieveByIdAsync(durationDTO.Id) == null)
+            if(!await _durationRepository.IsExists(id))
                 return NotFound();
 
             DurationDTO? updatedEntiy = await _durationRepository.UpdateAsync(durationDTO);
 
-            return (updatedEntiy != null) ? NoContent() : StatusCode(500);
+            return (updatedEntiy != null) ? Accepted(updatedEntiy) : StatusCode(500);
 
         }
 
@@ -92,7 +92,7 @@ namespace PixelCost.Service.DurationAPI.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> DeleteAsync(long id) {
 
-            if (await _durationRepository.RetrieveByIdAsync(id) == null)
+            if (!await _durationRepository.IsExists(id))
                 return NotFound();
 
             return (await _durationRepository.DeleteAsync(id)) ? NoContent() : StatusCode(500);

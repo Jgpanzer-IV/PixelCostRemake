@@ -9,6 +9,6 @@ namespace PixelCost.Service.DurationAPI.Services.Interfaces
         Task<DurationDTO?> CreateAsync(DurationDTO durationDTO);
         Task<DurationDTO?> UpdateAsync(DurationDTO durationDTO);
         Task<bool> DeleteAsync(long id);
-        Task UpdateEntity(long id);
+        Task<bool> IsExists(long id);
     }
 }

@@ -4,18 +4,27 @@ namespace PixelCost.Client.Web.Models.upload
 {
     public class DurationDTO
     {
-        public string Name {get;set;} = string.Empty;
-        public DateTime StartingDate {get;set;}
-        public DateTime EndingDate {get;set;} 
-        public int RemainDate {get;set;}  
-        public byte Progress {get;set;}
-        public decimal Cost {get;set;}
-        public decimal CostSubDuration {get;set;}
-        public decimal Expense {get;set;}
-        public decimal AverageExpense {get;set;}
-        public decimal Balance {get;set;}
-        public decimal Untouched {get;set;}
-        public bool IsActive {get;set;}
+        public long Id { get; set; }
+        public string UserId { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public DateTime StartingDate { get; set; }
+        public DateTime EndingDate { get; set; }
+        public int? TotalDays { get; set; }
+        public int? RemainingDays { get; set; }
+        public float? Progress { get; set; }
+        public decimal InitialCost { get; set; }
+        public decimal? TotalCost { get; set; }
+        public decimal? SumCategoryCost { get; set; }
+        public decimal? SumSubDurationCost { get; set; }
+        public decimal? UsableMoney { get; set; }
+        public decimal? Revenue { get; set; }
+        public int? RevenueCount { get; set; }
+        public decimal? Expense { get; set; }
+        public int? ExpenseCount { get; set; }
+        public decimal? Balance { get; set; }
+        public decimal? SumCategoryBalance { get; set; }
+        public decimal? SumSubDurationBalance { get; set; }
+        public bool? IsActive { get; set; }
 
         public List<SubDurationDTO>? SubDurations {get;set;}
         public List<PrimaryExpenseDTO>? PrimaryExpenses {get;set;}

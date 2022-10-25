@@ -129,7 +129,7 @@ namespace PixelCost.Client.Web.Services.Implements
             HttpStatusCode statusCode = response.StatusCode;
 
             // Handle for the success status code
-            if (response.IsSuccessStatusCode && response.StatusCode == HttpStatusCode.OK)
+            if (response.IsSuccessStatusCode && (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted))
             {
                 value = await response.Content.ReadFromJsonAsync<T?>();
             }

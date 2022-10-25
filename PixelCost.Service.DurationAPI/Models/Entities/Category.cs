@@ -11,5 +11,9 @@
         public bool? IsAchived { get; set; }
         public long DurationId { get; set; }
         public virtual Duration? Duration { get; set; }
+
+        public virtual IList<Expense>? Expenses { get; set; }
+
+
     }
 }

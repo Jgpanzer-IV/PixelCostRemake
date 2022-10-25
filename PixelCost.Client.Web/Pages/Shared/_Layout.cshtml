@@ -36,6 +36,9 @@
         </nav>
     </header>
     <div class="container">
+        @if (ViewData["problem"] != null) { 
+            <p class="bg-danger text-center p-1 text-white lead">@ViewData["problem"]</p>
+        }
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
