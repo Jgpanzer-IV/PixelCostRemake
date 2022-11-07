@@ -19,14 +19,14 @@
     FullProgressBar durationProgress = new() {
 
                 Value01 = startingDate?.ToShortDateString(),
-                Value02 = currentDate.ToShortDateString(),
+                Value02 = (currentDate >= startingDate)? currentDate.ToShortDateString():"Still not reach to this duration.",
                 Value03 = endingDate?.ToShortDateString(),
 
                 Label01 = "Starting Date",
                 Label02 = "Current",
                 Label03 = "Ending Date",
 
-                Description = "Remain " + Model.RetrievedDuration?.RemainingDays + " day will reach the end",
+                Description = (currentDate >= startingDate)? "Remain " + Model.RetrievedDuration?.RemainingDays + " day will reach the end" : "",
                 Progress = Model.RetrievedDuration?.Progress,
                 Information = "Pregress " + Model.RetrievedDuration?.Progress.ToString() + " %"
     };
@@ -189,12 +189,12 @@
         <div class="col-md-5">
             <input class="Text mt-3" asp-for="Duration.DurationName" placeholder="Duration's Name">
             <input class="Date mt-3" asp-for="Duration.StartingDate" placeholder="Starting Date">
-            <button type="submit" asp-page-handler="Update" asp-route-durationID="@Model.RetrievedDuration?.Id" class="mt-2 btn btn-info mb-2 w-100 text-center text-white">Update</button>
+            <button type="submit"  asp-page-handler="Update" asp-route-durationID="@Model.RetrievedDuration?.Id" class="mt-2 btn btn-info mb-2 w-100 text-center text-white">Update</button>
         </div>
         <div class="col-md-5">
             <input class="Text mt-3" asp-for="Duration.DurationCost" placeholder="Duration's Cost">
             <input class="Date mt-3" asp-for="Duration.EndingDate" placeholder="Ending Date">
-            <button type="submit" asp-page-handler="Delete" asp-route-durationID="@Model.RetrievedDuration?.Id" class="mt-2 btn btn-danger text-white text-center w-100">Delete</button>
+            <button type="submit" onclick="confirmDelete()" asp-page-handler="Delete" asp-route-durationID="@Model.RetrievedDuration?.Id" class="mt-2 btn btn-danger text-white text-center w-100">Delete</button>
         </div>
     </div>
     @*<div class="row justify-content-center my-4">
@@ -252,3 +252,14 @@
     </div>
 
 </div>
+
+
+@section Scripts{
+    <script>
+        function confirmDelete(){
+            confirm("Please confirm to delete, Once you press the button you will no longer retrieve the entity");
+        }
+
+
+    </script>
+}

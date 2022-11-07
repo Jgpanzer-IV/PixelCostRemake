@@ -26,8 +26,9 @@ namespace PixelCost.Service.RecordingAPI.Database
 
                 entity.Property(e => e.UserId).IsRequired();
                 entity.Property(e => e.DurationId).IsRequired();
-                entity.Property(e => e.SubDurationId).IsRequired();
+                entity.Property(e => e.SubDurationId);
                 entity.Property(e => e.CategoryId).IsRequired();
+                entity.Property(e => e.PaymentMethodId).IsRequired();
             });
 
             builder.Entity<PrimaryExpenseDTO>(entity => {
@@ -39,8 +40,7 @@ namespace PixelCost.Service.RecordingAPI.Database
 
                 entity.Property(e => e.UserId).IsRequired();
                 entity.Property(e => e.DurationId).IsRequired();
-                entity.Property(e => e.SubDurationId).IsRequired();
-                entity.Property(e => e.CategoryId).IsRequired();
+                entity.Property(e => e.PaymentMethodId).IsRequired();
             });
 
             builder.Entity<RevenueDTO>(entity => {
@@ -52,7 +52,8 @@ namespace PixelCost.Service.RecordingAPI.Database
 
                 entity.Property(e => e.UserId).IsRequired();
                 entity.Property(e => e.DurationId).IsRequired();
-                entity.Property(e => e.SubDurationId).IsRequired();
+                entity.Property(e => e.SubDurationId);
+                entity.Property(e => e.PaymentMethodId).IsRequired();
             });
 
         }

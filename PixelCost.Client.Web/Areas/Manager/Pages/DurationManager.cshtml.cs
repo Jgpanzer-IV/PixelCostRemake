@@ -81,7 +81,9 @@ namespace PixelCost.Client.Web.Areas.Pages
             if (result.Item3 == HttpStatusCode.Accepted)
             {
                 RetrievedDuration = result.Item1;
-                return Page();
+
+                // Redirect to itself with specified route value
+                return RedirectToPage(routeValues: new {DurationID = DurationID});
             }
             else if (result.Item3 == HttpStatusCode.NotFound)
             {

@@ -20,10 +20,10 @@ namespace PixelCost.Client.Web.Models.content
         /// <param name="primaryExpenseDTO">An object that be used to set all values</param>
         public ListItem(PrimaryExpenseDTO? primaryExpenseDTO)
         {
-            Name = primaryExpenseDTO?.Name;
-            ValueElement = primaryExpenseDTO?.Price.ToString();
-            Info = primaryExpenseDTO?.OrderDate.ToLongDateString();
-            Description = primaryExpenseDTO?.PaymentMethodID;
+            Name = primaryExpenseDTO?.OrderingName;
+            ValueElement = primaryExpenseDTO?.OrderingPrice.ToString();
+            Info = primaryExpenseDTO?.OrderingDate.ToLongDateString();
+            Description = primaryExpenseDTO?.PaymentMethodId.ToString();
         }
         
         /// <summary>

@@ -7,9 +7,13 @@ namespace PixelCost.Client.Web.Models.upload
 {
     public class PrimaryExpenseDTO
     {
-        public string Name {get;set;} = string.Empty;
-        public decimal Price {get;set;}
-        public DateTime OrderDate {get;set;}
-        public string PaymentMethodID {get;set;} = string.Empty;
+        public long Id { get; set; }
+        public string OrderingName { get; set; } = string.Empty;
+        public decimal OrderingPrice { get; set; }
+        public DateTime OrderingDate { get; set; }
+
+        public string UserId { get; set; } = string.Empty;
+        public long DurationId { get; set; }
+        public long PaymentMethodId { get; set; }
     }
 }

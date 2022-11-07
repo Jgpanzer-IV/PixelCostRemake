@@ -2,137 +2,127 @@
 @model PrimaryExpenseManager
 @{
 
-    List<ListItem> items = new(){
-        new ListItem(){
-            Name="Home",
-            ValueElement="8,670 B"
-        },
-        new ListItem(){
-            Name="Services",
-            ValueElement="4,250 B"
-        },
-        new ListItem(){
-            Name="Network",
-            ValueElement="1,200 B"
-        },
-        new ListItem(){}
+    string durationTitle = "Duration's Primary Expense";
+    string durationFinancial = "Duration Financial status";
+    string primaryExpenseListTitle = "Exists Primary Expense";
+    string managerTitle = "Primary Expense Manager";
+
+    DateTime currentDate = DateTime.Now;
+    DateTime? startingDate = Model.SelectedDuration?.StartingDate ;
+    DateTime? endingDate = Model.SelectedDuration?.EndingDate;
+
+    FullProgressBar durationFinancialProgress = new(){
+
+        Value01 = (0).ToString("C"),
+        Value02 = Model.SelectedDuration?.Balance.ToString() ?? "0",
+        Value03 = Model.SelectedDuration?.TotalCost.ToString() ?? "0",
+
+        Label01 = "Empty",
+        Label02 = "Balance",
+        Label03 = "Total Cost",
+
+        Description = "Remain " + Model.SelectedDuration?.RemainingDays + " day will reach the end",
+        Progress = Model.SelectedDuration?.Progress,
+        Information = "Pregress " + Model.SelectedDuration?.Progress +"%"
+
     };
 
-    var currentDate = DateTime.Now;
-    var startingDate = new DateTime(2022,07,01);
-    var endingDate = new DateTime(2022,07,31);
+    FinancialStatus? totalCost = null;
+    FinancialStatus? totalExpense = null;
+    FinancialStatus? primaryExpense = null;
+    FinancialStatus? balance = null;
 
-    FullProgressBar durationProgress = new(){
-
-        Value01 = "0 B",
-        Value02 = "8,693 B",
-        Value03 = "10,000 B",
-
-        Label01 = "Empty point",
-        Label02 = "Current balance",
-        Label03 = "Cost",
-
-        Description = "Remain " + endingDate.Subtract(currentDate).Days.ToString() + " day will reach the end",
-        Progress = 35,
-        Information = "Pregress 35%"
-    
-    };
-
-    FinancialStatus totalAsPercent = new(label:"As Percentang",value:string.Format("{0} %",35),status:1);
-    FinancialStatus totalAsNumberic = new(label:"As Numberic",value:string.Format("{0:C}",6930),status:1);
+    if (Model.SelectedDuration != null) { 
+        totalCost = new(label: "Total Cost", value: string.Format("{0:C}", Model.SelectedDuration.TotalCost), status:0);
+        totalExpense = new(label: "Total Expense", value: string.Format("{0:C}", Model.SelectedDuration.Expense), status:2);
+        primaryExpense = new(label:"Primary Expense",value:string.Format("{0:C}",Model.SelectedDuration.PrimaryExpenses?.Sum(e => e.OrderingPrice) ?? 0),status:2);
+        balance = new(label:"Balance",value:string.Format("{0:C}",Model.SelectedDuration.Balance),status:1);
+    }
 
 }
 
 <h1 class="text-center MainTitle my-5">Primary Expense Manager</h1>
-<span class="SubTopic">Duration Information</span>
-
+<partial name="asset/_SectorTitle" model="durationTitle" />
 <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-3">
         <label class="InfoText">Select Term to edit</label>
-        <select name="SelectedTerm" class="StyleWhite">
-            <option class="m-1" value="Term 01">Month 01</option>
-            <option value="Term 02">Month 02</option>
-            <option value="Term 03">Month 03</option>
-        </select>
+        <form method="get" id="selectorDuration">
+            <select asp-for="DurationId" asp-items="Model.DurationList" class="StyleWhite" id="durationList"></select>
+        </form>
     </div>
-    
-    <hr class="d-lg-none my-3"/>
     
     <div class="col-lg">
-        <partial name="asset/_FullProgressBar" model="durationProgress"></partial>
+        <partial name="asset/_FullProgressBar" model="durationFinancialProgress"></partial>
     </div>
-
-    <hr class="d-lg-none my-3"/>
 
     
 </div>
 
-<div class="my-4">
-    <span class="SubTopic my-2 text-center">Duration's financial information</span>
+<div class="my-1">
+    <partial name="asset/_SectorTitle" model="durationFinancial" />
     <div class="row">
         <div class="col-md">
-            <partial name="asset/_FinancialStatus" model="totalAsPercent"></partial>
+            <partial name="asset/_FinancialStatus" model="totalCost" />
         </div>
         <div class="col-md">
-            <partial name="asset/_FinancialStatus" model="totalAsNumberic"></partial>
+            <partial name="asset/_FinancialStatus" model="totalExpense"></partial>
+        </div>
+        <div class="col-md">
+            <partial name="asset/_FinancialStatus" model="primaryExpense"></partial>
+        </div>
+        <div class="col-md">
+            <partial name="asset/_FinancialStatus" model="balance"></partial>
         </div>
     </div>
 </div>
 
 <div class="row mt-2">
-    <div class="col-lg-6 mt-5">
-        <span class="SubTopic">Primary Expense</span>
-        <partial name="asset/_ListMenu" model="items"></partial>
+    <div class="col-lg-6">
+        <partial name="asset/_SectorTitle" model="primaryExpenseListTitle" />
+        <partial name="asset/_ListMenu" model="Model.PrimaryExpenseList"></partial>
     </div>
 
-    <div class="col-lg-6 mt-5">
-        <div class="d-flex h-100 flex-column flex-md-row justify-content-between">
-            <div class=" mb-5 my-md-0 mx-0 mx-md-5">
-                <div class="d-flex h-100 flex-row flex-md-column flex-wrap justify-content-evenly">
-                    <button id="AddBtn" type="menu" class="BtnNormal m-1 SizeMenu">Add</button>
-                    <button id="UpdateBtn" type="menu" class="BtnNormal m-1 SizeMenu">Update</button>
-                    <button id="DeleteBtn" type="menu" class="BtnNormal m-1 SizeMenu">Delete</button>
-                    <button id="CancelBtn" type="menu" class="BtnNormal m-1 SizeMenu">Cancel</button>
+
+    <!-- Primary Expense Manager -->
+    <div class="col-lg-6">
+        <partial name="asset/_SectorTitle" model="managerTitle" />
+        <p class="text-danger text-center lead" id="messageForm"></p>
+        <form method="post" id="ManagerForm">
+            <div class="d-flex h-auto flex-column flex-md-row justify-content-between">
+
+                <div class="d-flex h-auto flex-row flex-md-column flex-wrap justify-content-evenly justify-content-md-between">
+                    <button id="AddBtn" asp-page-handler="Create" type="submit" class="BtnNormal m-1 SizeMenu">Add</button>
+                    <button id="UpdateBtn" asp-page-handler="Update" type="submit" class="BtnNormal m-1 SizeMenu">Update</button>
+                    <button id="DeleteBtn" asp-page-handler="Delete" type="submit" class="BtnNormal m-1 SizeMenu">Delete</button>
+                    <button id="CancelBtn" type="reset" class="BtnNormal m-1 SizeMenu">Cancel</button>
+                </div>
+
+                <div class="w-100 mt-4 mt-md-0 ms-md-4">
+                    <div class="mb-2">
+                        <input asp-for="PrimaryExpenseForm.Name" class="Text" placeholder="Name Order" id="ExpenseName" />
+                    </div>
+                    <div class="mb-2">
+                        <input asp-for="PrimaryExpenseForm.Price" class="Text" placeholder="Price Order" id="ExpensePrice" />
+                    </div>
+                    <div class="mb-2">
+                        <input asp-for="PrimaryExpenseForm.OrderingDate" class="Text" placeholder="DateTime Order" id="Date" />
+                    </div>
+                    <div class="mb-2">
+                        <input asp-for="PrimaryExpenseForm.DurationId" type="hidden" value="@Model.DurationId" />
+                        <select asp-for="PrimaryExpenseForm.PaymentId" asp-items="Model.PaymentOptionList" name="SelectOption" class="StyleWhite">
+                        </select>
+                    </div>
+                    <input type="submit" class="BtnPrimary w-100" value="Done"/>
                 </div>
             </div>
-            <div class="">
-                <span class="SubTopic">Primary Expense Manager</span>
-                <div class="my-4">
-                    <input class="Text" placeholder="Name Order" id="ExpenseName" />
-                </div>
-                <div class="my-4">
-                    <input class="Text" placeholder="Price Order" id="ExpensePrice" />
-                </div>
-                <div class="my-4">
-                    <select name="SelectOption" class="Text">
-                        <option value="MobileBanking">Mobile Banking</option>
-                        <option value="True Money">True money wallet</option>
-                        <option value="Cache">Cache</option>
-                    </select>
-                </div>
-                <input type="submit" class="BtnPrimary w-100" value="Done"/>
-            </div>
-        </div>
+        </form>
     </div>
 
 </div>
 
+
 @section Scripts{
     <partial name="_ValidationScriptsPartial"></partial>
-    <script>
-        $(function(){
-            $('Button').each(function(){
-                $(this).on('click',function(arg){
-                    arg.preventDefault();
-
-                    if($(this).prop('id') == 'AddBtn'){
-                        alert('Test from Add');
-                    }
-
-                });
-            });
-
-        });
-
-    </script>
+    <script src="~/js/auto-selector-submit.js"></script>
+    <script src="~/js/form-manager.js"></script>
 }

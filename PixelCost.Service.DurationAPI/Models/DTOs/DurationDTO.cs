@@ -23,5 +23,10 @@
         public decimal? SumCategoryBalance { get; set; }
         public decimal? SumSubDurationBalance { get; set; }
         public bool? IsActive { get; set; }
+
+        public IList<PrimaryExpenseDTO>? primaryExpenseDTOs { get; set; }
+        public IList<RevenueDTO>? revenueDTOs { get; set; }
+        public IList<CategoryDTO>? categoryDTOs { get; set; }
+        public IList<SubDurationDTO>? subDurationDTOs { get; set; }
     }
 }

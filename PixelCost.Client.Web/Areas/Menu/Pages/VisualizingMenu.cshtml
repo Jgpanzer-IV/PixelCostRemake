@@ -48,17 +48,17 @@
         // Get payment label from expense
         if (Model?.SelectedDuration?.PrimaryExpenses != null){
             PaymentLabel.AddRange(Model.SelectedDuration.PrimaryExpenses
-                .Select(e => e.PaymentMethodID)
+                .Select(e => e.PaymentMethodId.ToString())
                 .Distinct()
                 .ToList()
             );
         }
 
         // Get payment label from Expense recording in every sub duration or entrie duration.
-        Model?.SelectedDuration?.SubDurations?.ForEach(
+        Model?.SelectedDuration?.SubDurations?.ToList().ForEach(
             e => 
                 e.Categories?.ForEach(
-                    c => c.ExpenseOrders?.ForEach(ex => {
+                    c => c.Expenses?.ForEach(ex => {
                         if (PaymentLabel.FirstOrDefault(ex.PaymentID) == null)
                             PaymentLabel.Add(ex.PaymentID);
                     })
@@ -70,10 +70,10 @@
         PaymentValueDuration = new();
         int getterRepeat = 0;
         PaymentLabel?.ForEach(e=>{
-            getterRepeat += Model?.SelectedDuration?.PrimaryExpenses?.Where(pe => pe.PaymentMethodID == e).Count() ?? 0;
-            Model?.SelectedDuration?.SubDurations?.ForEach(es=>{
+            getterRepeat += Model?.SelectedDuration?.PrimaryExpenses?.Where(pe => pe.PaymentMethodId.ToString() == e).Count() ?? 0;
+            Model?.SelectedDuration?.SubDurations?.ToList().ForEach(es=>{
                 es.Categories?.ForEach(ec=>{
-                    getterRepeat += ec.ExpenseOrders?.Where(ex => ex.PaymentID == e).Count() ?? 0;
+                    getterRepeat += ec.Expenses?.Where(ex => ex.PaymentID == e).Count() ?? 0;
                 });
             });
             PaymentValueDuration.Add(getterRepeat.ToString());
@@ -90,13 +90,13 @@
 
                 categoryBalance = new(Model.SelectedCategory);
                 categoryFinancial = new(Model.SelectedCategory);
-                categoryTotalOrder = new("Total Order",Model?.SelectedCategory?.ExpenseOrders?.Count().ToString());
-                categoryExpensePerOrder = new("Expense per order",(Model?.SelectedCategory.Expense / Model?.SelectedCategory?.ExpenseOrders?.Count()).ToString());
+                categoryTotalOrder = new("Total Order",Model?.SelectedCategory?.Expenses?.Count().ToString());
+                categoryExpensePerOrder = new("Expense per order",(Model?.SelectedCategory.Expense / Model?.SelectedCategory?.Expenses?.Count()).ToString());
 
                 RecordingPrice = new();
                 RecordingDate = new();
                 
-                Model?.SelectedCategory?.ExpenseOrders?.ForEach(e => {
+                Model?.SelectedCategory?.Expenses?.ForEach(e => {
                     RecordingPrice.Add(e.OrderPrice);
                     RecordingDate.Add(e.OrderDate.ToShortDateString());
                 });

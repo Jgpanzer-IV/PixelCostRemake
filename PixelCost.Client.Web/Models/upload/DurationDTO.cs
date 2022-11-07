@@ -26,8 +26,9 @@ namespace PixelCost.Client.Web.Models.upload
         public decimal? SumSubDurationBalance { get; set; }
         public bool? IsActive { get; set; }
 
-        public List<SubDurationDTO>? SubDurations {get;set;}
-        public List<PrimaryExpenseDTO>? PrimaryExpenses {get;set;}
-        public List<RevenueDTO>? Revenues {get;set;}
+        public IList<SubDurationDTO>? SubDurations {get;set;}
+        public IList<CategoryDTO>? categoryDTOs { get; set; }
+        public IList<PrimaryExpenseDTO>? PrimaryExpenses {get;set;}
+        public IList<RevenueDTO>? Revenues {get;set;}
     }
 }

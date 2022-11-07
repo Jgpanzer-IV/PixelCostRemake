@@ -31,7 +31,13 @@ namespace PixelCost.Service.DurationAPI.Services.Implementations
         {
             return Task.Run(() => {
                 UpdateEntity(id);
-                Duration? duration = _dbContext.Durations?.AsNoTracking().FirstOrDefault(e => e.Id == id);
+                Duration? duration = _dbContext.Durations!
+                    .Include(e => e.SubDurations)
+                    .Include(e => e.Revenues)
+                    .Include(e => e.PrimaryExpenses)
+                    .Include(e => e.Categories)!
+                    .ThenInclude(c => c.Expenses)
+                    .AsNoTracking().FirstOrDefault(e => e.Id == id);
                 return (duration != null) ? _mapper.Map<DurationDTO>(duration) : null;
             });
         }
@@ -124,10 +130,12 @@ namespace PixelCost.Service.DurationAPI.Services.Implementations
 
         public Task<bool> IsExists(long id) {
             return Task.Run(() => {
-                if (_dbContext.Durations?.AsNoTracking().FirstOrDefault(e => e.Id == id) == null)
+                if (_dbContext.Durations?.AsNoTracking().SingleOrDefault(e => e.Id == id) == null)
                     return false;
                 return true;
             });
         }
+
+  
     }
 }

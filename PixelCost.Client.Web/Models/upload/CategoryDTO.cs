@@ -13,6 +13,6 @@ namespace PixelCost.Client.Web.Models.upload
         public decimal Expense {get;set;}
         public decimal AverageExpense {get;set;}
 
-        public List<ExpenseDTO>? ExpenseOrders {get;set;}
+        public List<ExpenseDTO>? Expenses {get;set;}
     }
 }

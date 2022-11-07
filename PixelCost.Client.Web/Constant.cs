@@ -18,6 +18,7 @@ namespace PixelCost.Client.Web
         public static string walletUserApi = "walletUserAPI";
         public static string paymentMethodApi = "paymentMethodAPI";
         public static string durationApi = "durationAPI";
+        public static string primaryExpenseApi = "primaryExpenseAPI";
 
         // PaymentMethodAPI's endpoint Name
         public static string payment_RetrieveByUserId = "userId/";

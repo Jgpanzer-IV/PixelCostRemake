@@ -31,19 +31,11 @@ namespace PixelCost.Service.RecordingAPI.Services.Implementations
             return (result == 1) ? true : false;
         });
 
-        public Task<IList<PrimaryExpenseDTO>?> RetrieveByCategoryIdAsync(long id) => Task.Run(() => {
-            IList<PrimaryExpenseDTO>? result = _dbContext.PrimaryExpenses?.AsNoTracking().Where(e => e.CategoryId == id).ToList();
-            return (result == null || result.Count == 0) ? null : result;
-        });
-
         public Task<IList<PrimaryExpenseDTO>?> RetrieveByDurationIdAsync(long id) => Task.Run(() => {
             IList<PrimaryExpenseDTO>? result = _dbContext.PrimaryExpenses?.AsNoTracking().Where(e => e.DurationId == id).ToList();
             return (result == null || result.Count == 0) ? null : result;
         });
-        public Task<IList<PrimaryExpenseDTO>?> RetrieveBySubDurationIdAsync(long id) => Task.Run(() => {
-            IList<PrimaryExpenseDTO>? result = _dbContext.PrimaryExpenses?.AsNoTracking().Where(e => e.SubDurationId == id).ToList();
-            return (result == null || result.Count == 0) ? null : result;
-        });
+    
         public Task<IList<PrimaryExpenseDTO>?> RetrieveByUserIdAsync(string userId) => Task.Run(() => {
             IList<PrimaryExpenseDTO>? result = _dbContext.PrimaryExpenses?.AsNoTracking().Where(e => e.UserId == userId).ToList();
             return (result == null || result.Count == 0) ? null : result;

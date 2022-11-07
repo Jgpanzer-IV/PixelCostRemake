@@ -10,5 +10,8 @@
         public decimal? Balance { get; set; }
         public bool IsAchived { get; set; }
         public long DurationId { get; set; }
+
+        IList<ExpenseDTO>? expenseDTOs { get; set; }
+
     }
 }

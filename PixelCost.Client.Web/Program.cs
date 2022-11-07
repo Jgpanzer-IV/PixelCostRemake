@@ -79,6 +79,13 @@ builder.Services.AddHttpClient(Constant.durationApi, config => {
     config.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 });
 
+builder.Services.AddHttpClient(Constant.primaryExpenseApi, config =>
+{
+    config.BaseAddress = new Uri(builder.Configuration["UriServers:primaryExpenseAPI"]);
+    config.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+});
+
+
 builder.Services.AddScoped<ICommunicationServices, CommunicationServices>();
 
 

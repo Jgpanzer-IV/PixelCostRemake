@@ -34,28 +34,10 @@ namespace PixelCost.Service.RecordingAPI.Controllers
             return (primaryExpenseDTOs != null) ? Ok(primaryExpenseDTOs) : NotFound();
         }
 
-        [HttpGet("subDuration/{id:long}")]
-        [ProducesResponseType(typeof(List<PrimaryExpenseDTO>), 200)]
-        [ProducesResponseType(404)]
-        public async Task<IActionResult> RetrieveBySubDurationIdAsync(long id)
-        {
-            IList<PrimaryExpenseDTO>? primaryExpenseDTOs = await _primaryExpenseRepo.RetrieveBySubDurationIdAsync(id);
-            return (primaryExpenseDTOs != null) ? Ok(primaryExpenseDTOs) : NotFound();
-        }
-
-        [HttpGet("category/{id:long}")]
-        [ProducesResponseType(typeof(List<PrimaryExpenseDTO>), 200)]
-        [ProducesResponseType(404)]
-        public async Task<IActionResult> RetrieveByCategoryIdAsync(long id)
-        {
-            IList<PrimaryExpenseDTO>? primaryExpenseDTOs = await _primaryExpenseRepo.RetrieveByCategoryIdAsync(id);
-            return (primaryExpenseDTOs != null) ? Ok(primaryExpenseDTOs) : NotFound();
-        }
-
-        [HttpGet("id/{id:long}", Name = nameof(RetrievePrimaryExpenseByIdAsync))]
+        [HttpGet("id/{id:long}", Name = nameof(RetrieveByIdAsync))]
         [ProducesResponseType(typeof(PrimaryExpenseDTO), 200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> RetrievePrimaryExpenseByIdAsync(long id)
+        public async Task<IActionResult> RetrieveByIdAsync(long id)
         {
             PrimaryExpenseDTO? categoryDTO = await _primaryExpenseRepo.RetrieveByIdAsync(id);
             return (categoryDTO != null) ? Ok(categoryDTO) : NotFound();
@@ -86,7 +68,7 @@ namespace PixelCost.Service.RecordingAPI.Controllers
 
             return (createdEntity != null) ?
                 CreatedAtRoute(
-                    routeName: nameof(RetrievePrimaryExpenseByIdAsync),
+                    routeName: nameof(RetrieveByIdAsync),
                     routeValues: new { id = createdEntity.Id },
                     value: createdEntity) :
                 StatusCode(500);
